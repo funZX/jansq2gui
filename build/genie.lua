@@ -32,18 +32,21 @@ solution "jansq2gui"
     configuration "Release"
         targetdir "bin/Release"	
 		debugdir "bin/Release"
-		defines { 
+		defines {
 			"NDEBUG",
 		}
 		
 	configuration { "vs*", "x32 or x64" }
-		defines { 
+		defines {
+			"WIN32", "_WIN32",
+			"WIN32_LEAN_AND_MEAN",
 			"_GLFW_WIN32",
-			"IMGUI_USE_GLFW_BINDING",		
+			"IMGUI_USE_GLFW_BINDING",
 		}
 
 	configuration { "linux-*", "x32 or x64" }
-		defines { 
+		defines {
+			"LINUX",
 			"_GLFW_X11",
 			"IMGUI_USE_GLFW_BINDING",
 		}
@@ -142,19 +145,19 @@ project ("3rdparty")
 	}
 
 	files {
-		path.join(localDir, "squirel/include/**.h"),
-		path.join(localDir, "squirel/squirrel/**.cpp"),
-		path.join(localDir, "squirel/squirrel/**.h"),
-		path.join(localDir, "squirel/sqstdlib/**.cpp"),
-		path.join(localDir, "squirel/sqstdlib/**.h"),
-		path.join(localDir, "squirel/sqdbg/**.cpp"),
-		path.join(localDir, "squirel/sqdbg/**.h"),
+		path.join(localDir, "squirrel/include/**.h"),
+		path.join(localDir, "squirrel/squirrel/**.cpp"),
+		path.join(localDir, "squirrel/squirrel/**.h"),
+		path.join(localDir, "squirrel/sqstdlib/**.cpp"),
+		path.join(localDir, "squirrel/sqstdlib/**.h"),
+		path.join(localDir, "squirrel/sqdbg/**.cpp"),
+		path.join(localDir, "squirrel/sqdbg/**.h"),
 
-		path.join(localDir, "squirel/sqrat/include/**.h"),
-		path.join(localDir, "squirel/sqrat/sqimport/**.cpp"),
-		path.join(localDir, "squirel/sqrat/sqratthread/**.h"),
-		path.join(localDir, "squirel/sqrat/sqratthreadg/**.cpp"),
-		path.join(localDir, "squirel/sqrat/sqratthread/**.h"),
+		path.join(localDir, "squirrel/sqrat/include/**.h"),
+		path.join(localDir, "squirrel/sqrat/sqimport/**.cpp"),
+		path.join(localDir, "squirrel/sqrat/sqratthread/**.h"),
+		path.join(localDir, "squirrel/sqrat/sqratthreadg/**.cpp"),
+		path.join(localDir, "squirrel/sqrat/sqratthread/**.h"),
 		
 		path.join(localDir, "asyncplusplus/include/**.h"),
 		path.join(localDir, "asyncplusplus/src/**.cpp"),
