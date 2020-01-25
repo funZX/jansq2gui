@@ -22,3 +22,6 @@
 [submodule "3rdparty/sqlite3"]
 	path = 3rdparty/sqlite3
 	url = git@github.com:funZX/sqlite3.git
+[submodule "3rdparty/opengles"]
+	path = 3rdparty/opengles
+	url = git@github.com:funZX/opengles.git
