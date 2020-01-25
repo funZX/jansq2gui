@@ -25,3 +25,6 @@
 [submodule "3rdparty/opengles"]
 	path = 3rdparty/opengles
 	url = git@github.com:funZX/opengles.git
+[submodule "3rdparty/asyncplusplus"]
+	path = 3rdparty/asyncplusplus
+	url = git@github.com:Amanieu/asyncplusplus.git

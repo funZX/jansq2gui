@@ -26,6 +26,7 @@ solution "jansq2gui"
 		debugdir "bin/Debug"
 		defines { 
 			"DEBUG",
+			"JANSQ2GUI_WITH_DEBUGGER"
 		}
 
     configuration "Release"
@@ -38,15 +39,13 @@ solution "jansq2gui"
 	configuration { "vs*", "x32 or x64" }
 		defines { 
 			"_GLFW_WIN32",
-			"IMGUI_USE_GLFW_BINDING",
-			"IMGUI_INCLUDE_IMGUI_USER_H",
+			"IMGUI_USE_GLFW_BINDING",		
 		}
 
 	configuration { "linux-*", "x32 or x64" }
 		defines { 
 			"_GLFW_X11",
 			"IMGUI_USE_GLFW_BINDING",
-			"IMGUI_INCLUDE_IMGUI_USER_H",
 		}
 		
 -----------------------------------------------------------------
@@ -55,7 +54,37 @@ project ("jansq2gui")
 	kind "ConsoleApp"	
 	
 	includedirs { 
-		path.join(prjDir, "../include"),	
+		path.join(prjDir, "../jansq2gui"),
+		
+		path.join(prjDir, "../3rdparty/squirrel/include"),
+		path.join(prjDir, "../3rdparty/squirrel/sqstdlib"),
+		path.join(prjDir, "../3rdparty/squirrel/squirrel"),
+		path.join(prjDir, "../3rdparty/squirrel/sqdbg"),
+		path.join(prjDir, "../3rdparty/squirrel/sqrat/include"),
+		
+		path.join(prjDir, "../3rdparty/zpl-c/enet/include"),
+		path.join(prjDir, "../3rdparty/zpl-c/zpl/code"),
+		path.join(prjDir, "../3rdparty/zpl-c/librg/include"),
+
+		path.join(prjDir, "../3rdparty/asyncplusplus/include"),
+		
+		path.join(prjDir, "../3rdparty/jansson/src"),
+		path.join(prjDir, "../3rdparty/jansson/src/janssonxx"),
+		
+		path.join(prjDir, "../3rdparty/sqlite3"),
+		path.join(prjDir, "../3rdparty/sqlite3/sqlite3pp"),
+		
+		path.join(prjDir, "../3rdparty/imgui"),
+		path.join(prjDir, "../3rdparty/imgui/misc"),
+		path.join(prjDir, "../3rdparty/imgui/addons"),
+		
+		path.join(prjDir, "../3rdparty/zpl-c/zpl/code"),
+		path.join(prjDir, "../3rdparty/zpl-c/enet/include"),
+		path.join(prjDir, "../3rdparty/zpl-c/librg/include"),
+
+		path.join(prjDir, "../3rdparty/glfw/include"),
+		
+		path.join(prjDir, "../3rdparty/opengles/include"),
 	}
 
 	files {
@@ -64,9 +93,14 @@ project ("jansq2gui")
 	}
 	
 	links {
-		"EGL",
-		"GLESv2",
+		"libEGL",
+		"libGLESv2",
 		"3rdparty",
+	}
+	
+	libdirs {
+		path.join(prjDir, "../build/**"),
+		path.join(prjDir, "../3rdparty/opengles/bin"),
 	}
 -----------------------------------------------------------------
 		
@@ -76,7 +110,6 @@ project ("3rdparty")
 	local localDir = path.join(prjDir, "../3rdparty")
 	
 	includedirs { 
-------------------------  squirel  ------------------------------
 		path.join(localDir, "squirrel/include"),
 		path.join(localDir, "squirrel/sqstdlib"),
 		path.join(localDir, "squirrel/squirrel"),
@@ -86,38 +119,29 @@ project ("3rdparty")
 		path.join(localDir, "zpl-c/enet/include"),
 		path.join(localDir, "zpl-c/zpl/code"),
 		path.join(localDir, "zpl-c/librg/include"),
+
+		path.join(localDir, "asyncplusplus/include"),
 		
-------------------------  jansson  ------------------------------
 		path.join(localDir, "jansson/src"),
 		path.join(localDir, "jansson/src/janssonxx"),
 		
-------------------------  sqlite3  ------------------------------		
 		path.join(localDir, "sqlite3"),
 		path.join(localDir, "sqlite3/sqlite3pp"),
 		
---------------------------  imgui  ------------------------------
 		path.join(localDir, "imgui"),
 		path.join(localDir, "imgui/misc"),
 		path.join(localDir, "imgui/addons"),
 		
---------------------------  zpl-c  ------------------------------
 		path.join(localDir, "zpl-c/zpl/code"),
 		path.join(localDir, "zpl-c/enet/include"),
 		path.join(localDir, "zpl-c/librg/include"),
 
-------------------------  glfw  ---------------------------------
 		path.join(localDir, "glfw/include"),
 		
-------------------------  opengles  -----------------------------
 		path.join(localDir, "opengles/include"),
------------------------------------------------------------------		
-
 	}
-	
-
 
 	files {
-------------------------  squirel  ------------------------------	
 		path.join(localDir, "squirel/include/**.h"),
 		path.join(localDir, "squirel/squirrel/**.cpp"),
 		path.join(localDir, "squirel/squirrel/**.h"),
@@ -132,21 +156,22 @@ project ("3rdparty")
 		path.join(localDir, "squirel/sqrat/sqratthreadg/**.cpp"),
 		path.join(localDir, "squirel/sqrat/sqratthread/**.h"),
 		
-------------------------  jansson  ------------------------------
+		path.join(localDir, "asyncplusplus/include/**.h"),
+		path.join(localDir, "asyncplusplus/src/**.cpp"),
+		path.join(localDir, "asyncplusplus/src/**.h"),
+
 		path.join(localDir, "jansson/include/**.h"),
 		path.join(localDir, "jansson/src/**.c"),
 		path.join(localDir, "jansson/src/**.h"),
 		path.join(localDir, "jansson/janssonxx/jansson.hpp"),
 		path.join(localDir, "jansson/janssonxx/jansson-impl.hpp"),	
 		
-------------------------  sqlite3  ------------------------------
 		path.join(localDir, "sqlite3/include/**.h"),
 		path.join(localDir, "sqlite3/**.c"),
 		path.join(localDir, "sqlite3/**.h"),
 		path.join(localDir, "sqlite3/sqlite3pp/**.c"),
 		path.join(localDir, "sqlite3/sqlite3pp/**.h"),
 		
--------------------------  imgui  ------------------------------		
 		path.join(localDir, "imgui/include/**.h"),
 		path.join(localDir, "imgui/imconfig.h"),
 		path.join(localDir, "imgui/imgui.h"),
@@ -156,13 +181,11 @@ project ("3rdparty")
 		path.join(localDir, "imgui/imstb_*.cpp"),
 		path.join(localDir, "imgui/imstb_*.h"),
 		
---------------------------  zpl-c  ------------------------------		
 		path.join(localDir, "zpl-c/zpl/code/zpl.h"),
 		path.join(localDir, "zpl-c/enet/include/enet.h"),
 		path.join(localDir, "zpl-c/librg/include/librg.h"),
------------------------------------------------------------------
+
 		path.join(localDir, "opengles/include/**.h"),
------------------------------------------------------------------	
 	}
 	
 	configuration { "vs*", "x32 or x64" }
