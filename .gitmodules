@@ -1,0 +1,24 @@
+[submodule "3rdparty/jansson"]
+	path = 3rdparty/jansson
+	url = git@github.com:funZX/jansson.git
+[submodule "3rdparty/squirrel"]
+	path = 3rdparty/squirrel
+	url = git@github.com:funZX/squirrel.git
+[submodule "3rdparty/imgui"]
+	path = 3rdparty/imgui
+	url = git@github.com:funZX/imgui.git
+[submodule "3rdparty/zpl-c/enet"]
+	path = 3rdparty/zpl-c/enet
+	url = git@github.com:funZX/enet.git
+[submodule "3rdparty/zpl-c/zpl"]
+	path = 3rdparty/zpl-c/zpl
+	url = git@github.com:funZX/zpl.git
+[submodule "3rdparty/zpl-c/librg"]
+	path = 3rdparty/zpl-c/librg
+	url = git@github.com:funZX/librg.git
+[submodule "3rdparty/glfw"]
+	path = 3rdparty/glfw
+	url = git@github.com:funZX/glfw.git
+[submodule "3rdparty/sqlite3"]
+	path = 3rdparty/sqlite3
+	url = git@github.com:funZX/sqlite3.git
