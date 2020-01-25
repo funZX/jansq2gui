@@ -26,7 +26,8 @@ solution "jansq2gui"
 		debugdir "bin/Debug"
 		defines { 
 			"DEBUG",
-			"JANSQ2GUI_WITH_DEBUGGER"
+			"JANSQ2GUI_WITH_DEBUGGER",
+			"IMGUI_USE_GLFW_BINDING",			
 		}
 
     configuration "Release"
@@ -34,6 +35,7 @@ solution "jansq2gui"
 		debugdir "bin/Release"
 		defines {
 			"NDEBUG",
+			"IMGUI_USE_GLFW_BINDING",			
 		}
 		
 	configuration { "vs*", "x32 or x64" }
@@ -41,14 +43,12 @@ solution "jansq2gui"
 			"WIN32", "_WIN32",
 			"WIN32_LEAN_AND_MEAN",
 			"_GLFW_WIN32",
-			"IMGUI_USE_GLFW_BINDING",
 		}
 
 	configuration { "linux-*", "x32 or x64" }
 		defines {
 			"LINUX",
 			"_GLFW_X11",
-			"IMGUI_USE_GLFW_BINDING",
 		}
 		
 -----------------------------------------------------------------
@@ -72,10 +72,10 @@ project ("jansq2gui")
 		path.join(prjDir, "../3rdparty/asyncplusplus/include"),
 		
 		path.join(prjDir, "../3rdparty/jansson/src"),
-		path.join(prjDir, "../3rdparty/jansson/src/janssonxx"),
+		path.join(prjDir, "../3rdparty/jansson/janssonxx"),
 		
 		path.join(prjDir, "../3rdparty/sqlite3"),
-		path.join(prjDir, "../3rdparty/sqlite3/sqlite3pp"),
+		path.join(prjDir, "../3rdparty/sqlite3/sqlite3pp/src"),
 		
 		path.join(prjDir, "../3rdparty/imgui"),
 		path.join(prjDir, "../3rdparty/imgui/misc"),
@@ -126,10 +126,10 @@ project ("3rdparty")
 		path.join(localDir, "asyncplusplus/include"),
 		
 		path.join(localDir, "jansson/src"),
-		path.join(localDir, "jansson/src/janssonxx"),
+		path.join(localDir, "jansson/janssonxx"),
 		
 		path.join(localDir, "sqlite3"),
-		path.join(localDir, "sqlite3/sqlite3pp"),
+		path.join(localDir, "sqlite3/sqlite3pp/src"),
 		
 		path.join(localDir, "imgui"),
 		path.join(localDir, "imgui/misc"),
@@ -172,8 +172,8 @@ project ("3rdparty")
 		path.join(localDir, "sqlite3/include/**.h"),
 		path.join(localDir, "sqlite3/**.c"),
 		path.join(localDir, "sqlite3/**.h"),
-		path.join(localDir, "sqlite3/sqlite3pp/**.c"),
-		path.join(localDir, "sqlite3/sqlite3pp/**.h"),
+		path.join(localDir, "sqlite3/sqlite3pp/src/**.c"),
+		path.join(localDir, "sqlite3/sqlite3pp/src/**.h"),
 		
 		path.join(localDir, "imgui/include/**.h"),
 		path.join(localDir, "imgui/imconfig.h"),
@@ -187,6 +187,7 @@ project ("3rdparty")
 		path.join(localDir, "zpl-c/zpl/code/zpl.h"),
 		path.join(localDir, "zpl-c/enet/include/enet.h"),
 		path.join(localDir, "zpl-c/librg/include/librg.h"),
+		path.join(localDir, "zpl-c/zpl-c.c"),
 
 		path.join(localDir, "opengles/include/**.h"),
 	}
@@ -206,7 +207,7 @@ project ("3rdparty")
 			path.join(localDir, "glfw/src/win32_window.c"),
 			path.join(localDir, "glfw/src/wgl_context.c"),
 			path.join(localDir, "glfw/src/egl_context.c"),
-			path.join(localDir, "glfw/src/osmesa_context.c"),			
+			path.join(localDir, "glfw/src/osmesa_context.c"),		
 		}
 
 	configuration { "linux-*", "x32 or x64" }

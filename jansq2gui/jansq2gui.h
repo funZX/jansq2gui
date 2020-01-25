@@ -41,9 +41,13 @@
 #include <sqrdbg.h>
 #include <sqdbgserver.h>
 
-#include <async++.h>
-
 #include <zpl.h>
+#include <enet.h>
+#include <librg.h>
+#include <async++.h>
+#include <jansson.hpp>
+#include <imgui.h>
+#include <sqlite3pp.h>
 
 #include <GLFW/glfw3.h>
 
@@ -66,7 +70,7 @@ namespace jansq2gui
 
 }; // namespace jansq2gui
 
-#define jansq2gui_assert( x )				assert(x)
+#define jansq2gui_assert( x )				ZPL_ASSERT_MSG(x, __FUNCTION__)
 
 #define jansq2gui_echo( ... )			    zpl_printf( __VA_ARGS__ )
 #define jansq2gui_warn( ... )				zpl_printf( __VA_ARGS__ )
