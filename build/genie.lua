@@ -27,7 +27,9 @@ solution "jansq2gui"
 		defines { 
 			"DEBUG",
 			"JANSQ2GUI_WITH_DEBUGGER",
-			"IMGUI_USE_GLFW_BINDING",			
+			
+			"IMGUI_USE_GLFW_BINDING",
+			"LIBASYNC_STATIC",
 		}
 
     configuration "Release"
@@ -35,7 +37,9 @@ solution "jansq2gui"
 		debugdir "bin/Release"
 		defines {
 			"NDEBUG",
-			"IMGUI_USE_GLFW_BINDING",			
+			
+			"IMGUI_USE_GLFW_BINDING",	
+			"LIBASYNC_STATIC",			
 		}
 		
 	configuration { "vs*", "x32 or x64" }
@@ -184,12 +188,19 @@ project ("3rdparty")
 		path.join(localDir, "imgui/imstb_*.cpp"),
 		path.join(localDir, "imgui/imstb_*.h"),
 		
-		path.join(localDir, "zpl-c/zpl/code/zpl.h"),
+		path.join(localDir, "zpl-c/zpl/code/header/**.h"),
+		path.join(localDir, "zpl-c/zpl/code/other/**.h"),
+		path.join(localDir, "zpl-c/zpl/code/source/**.c"),
+		
 		path.join(localDir, "zpl-c/enet/include/enet.h"),
 		path.join(localDir, "zpl-c/librg/include/librg.h"),
 		path.join(localDir, "zpl-c/zpl-c.c"),
 
 		path.join(localDir, "opengles/include/**.h"),
+	}
+	
+	excludes {
+		path.join(localDir, "zpl-c/zpl/code/source/**.c"),	
 	}
 	
 	configuration { "vs*", "x32 or x64" }
