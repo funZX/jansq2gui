@@ -28,7 +28,9 @@ solution "jansq2gui"
 			"DEBUG",
 			"JANSQ2GUI_WITH_DEBUGGER",
 			
+			"IMGUI_USE_GLAD",
 			"IMGUI_USE_GLFW_BINDING",
+			"IMIMPL_SHADER_GLES",
 			"LIBASYNC_STATIC",
 		}
 
@@ -38,7 +40,9 @@ solution "jansq2gui"
 		defines {
 			"NDEBUG",
 			
-			"IMGUI_USE_GLFW_BINDING",	
+			"IMGUI_USE_GLAD",
+			"IMGUI_USE_GLFW_BINDING",
+			"IMIMPL_SHADER_GLES",
 			"LIBASYNC_STATIC",			
 		}
 		
@@ -90,8 +94,7 @@ project ("jansq2gui")
 		path.join(prjDir, "../3rdparty/zpl-c/librg/include"),
 
 		path.join(prjDir, "../3rdparty/glfw/include"),
-		
-		path.join(prjDir, "../3rdparty/opengles/include"),
+		path.join(prjDir, "../3rdparty/glfw/deps"),		
 	}
 
 	files {
@@ -100,14 +103,11 @@ project ("jansq2gui")
 	}
 	
 	links {
-		"libEGL",
-		"libGLESv2",
 		"3rdparty",
 	}
 	
 	libdirs {
 		path.join(prjDir, "../build/**"),
-		path.join(prjDir, "../3rdparty/opengles/bin"),
 	}
 -----------------------------------------------------------------
 		
@@ -144,8 +144,7 @@ project ("3rdparty")
 		path.join(localDir, "zpl-c/librg/include"),
 
 		path.join(localDir, "glfw/include"),
-		
-		path.join(localDir, "opengles/include"),
+		path.join(localDir, "glfw/deps"),
 	}
 
 	files {
@@ -196,7 +195,26 @@ project ("3rdparty")
 		path.join(localDir, "zpl-c/librg/include/librg.h"),
 		path.join(localDir, "zpl-c/zpl-c.c"),
 
+		path.join(localDir, "glfw/include/**.h"),
 		path.join(localDir, "opengles/include/**.h"),
+		
+		path.join(localDir, "glfw/src/internal.h"),
+		path.join(localDir, "glfw/src/mappings.h"),
+		path.join(localDir, "glfw/src/context.c"),
+		path.join(localDir, "glfw/src/init.c"),
+		path.join(localDir, "glfw/src/input.c"),
+		path.join(localDir, "glfw/src/monitor.c"),
+        path.join(localDir, "glfw/src/vulkan.c"),
+		path.join(localDir, "glfw/src/window.c"),
+		path.join(localDir, "glfw/src/osmesa_context.h"),
+		path.join(localDir, "glfw/src/osmesa_context.c"),
+		path.join(localDir, "glfw/src/egl_context.h"),
+		path.join(localDir, "glfw/src/egl_context.c"),
+		
+		path.join(localDir, "glfw/deps/**.h"),
+		path.join(localDir, "glfw/deps/**.c"),
+		path.join(localDir, "glfw/deps/glad/**.h"),
+		path.join(localDir, "glfw/deps/glad/**.c"),
 	}
 	
 	excludes {
@@ -208,8 +226,6 @@ project ("3rdparty")
 			path.join(localDir, "glfw/src/win32_platform.h"),
 			path.join(localDir, "glfw/src/win32_joystick.h"),
 			path.join(localDir, "glfw/src/wgl_context.h"),
-			path.join(localDir, "glfw/src/egl_context.h"),
-			path.join(localDir, "glfw/src/osmesa_context.h"),
 			path.join(localDir, "glfw/src/win32_init.c"),
 			path.join(localDir, "glfw/src/win32_joystick.c"),
 			path.join(localDir, "glfw/src/win32_monitor.c"),
@@ -217,8 +233,6 @@ project ("3rdparty")
 			path.join(localDir, "glfw/src/win32_thread.c"),
 			path.join(localDir, "glfw/src/win32_window.c"),
 			path.join(localDir, "glfw/src/wgl_context.c"),
-			path.join(localDir, "glfw/src/egl_context.c"),
-			path.join(localDir, "glfw/src/osmesa_context.c"),		
 		}
 
 	configuration { "linux-*", "x32 or x64" }
@@ -228,8 +242,6 @@ project ("3rdparty")
 			path.join(localDir, "glfw/src/posix_time.h"),
 			path.join(localDir, "glfw/src/posix_thread.h"),
 			path.join(localDir, "glfw/src/glx_context.h"),
-			path.join(localDir, "glfw/src/egl_context.h"),
-			path.join(localDir, "glfw/src/osmesa_context.h"),
 			path.join(localDir, "glfw/src/x11_init.c"),
 			path.join(localDir, "glfw/src/x11_monitor.c"),
 			path.join(localDir, "glfw/src/x11_window.c"),
@@ -237,8 +249,6 @@ project ("3rdparty")
 			path.join(localDir, "glfw/src/posix_time.c"),
 			path.join(localDir, "glfw/src/posix_thread.c"),
 			path.join(localDir, "glfw/src/glx_context.c"),
-			path.join(localDir, "glfw/src/egl_context.c"),
-			path.join(localDir, "glfw/src/osmesa_context.c"),
 		}
 -----------------------------------------------------------------
 -----------------------------------------------------------------

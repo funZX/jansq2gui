@@ -70,7 +70,7 @@ namespace jansq2gui
 
 }; // namespace jansq2gui
 
-#define jansq2gui_assert( x )				ZPL_ASSERT_MSG(x, __FUNCTION__)
+#define jansq2gui_assert( x, ... )			ZPL_ASSERT_MSG((x), __FUNCTION__, __VA_ARGS__)
 
 #define jansq2gui_echo( ... )			    zpl_printf( __VA_ARGS__ )
 #define jansq2gui_warn( ... )				zpl_printf( __VA_ARGS__ )
