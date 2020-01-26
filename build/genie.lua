@@ -52,7 +52,7 @@ solution "jansq2gui"
 			"IMGUI_USE_GLAD",
 			"IMGUI_USE_GLFW_BINDING",
 			"IMIMPL_SHADER_GLES",
-			"LIBASYNC_STATIC",			
+			"LIBASYNC_STATIC",		
 		}
 		libdirs {
 			path.join(prjDir, "../build/bin/Release"),
@@ -200,8 +200,9 @@ project ("3rdparty")
 		path.join(localDir, "jansson/janssonxx/jansson-impl.hpp"),	
 		
 		path.join(localDir, "sqlite3/include/**.h"),
-		path.join(localDir, "sqlite3/**.c"),
-		path.join(localDir, "sqlite3/**.h"),
+		path.join(localDir, "sqlite3/*.h"),
+		path.join(localDir, "sqlite3/*.c"),
+		path.join(localDir, "sqlite3/sqlite3pp/headeronly_src/**.h"),
 		path.join(localDir, "sqlite3/sqlite3pp/src/**.c"),
 		path.join(localDir, "sqlite3/sqlite3pp/src/**.h"),
 		

@@ -51,10 +51,10 @@ public:
 	HSQUIRRELVM						GetSQVM() { return m_vm; }
 
 	template<class V>
-	void							AddRootSlot(const char* name, V* val);
+	void							AddRootSlot(const SQChar* name, V* val);
 
 	template<class V>
-	void							AddConstSlot(const char* name, V* val);
+	void							AddConstSlot(const SQChar* name, V* val);
 
 
     Sqrat::string					GetLastErrorMsg() { return m_lastErrorMsg; }
@@ -63,8 +63,8 @@ public:
     void							SetPrintFunc(SQPRINTFUNCTION printFunc, SQPRINTFUNCTION errFunc);
     void							SetErrorHandler(SQFUNCTION runErr, SQCOMPILERERROR comErr);
 
+    void                            ExecVoidFunc( const SQChar* slot, const SQChar* func);
     K_ERROR							Exec( CScript* script );
-
 	// ------------------------------------------------------------------//
 protected:
 	// ------------------------------------------------------------------//
@@ -74,6 +74,11 @@ protected:
 #endif // JANSQ2GUI_WITH_DEBUGGER
 
 	// ------------------------------------------------------------------//
+    void							BindImGui();
+    void							BindZpl();
+    void							BindSqlite();
+    void							BindJson();
+
 	void							BindAll();
 	// ------------------------------------------------------------------//
 
@@ -102,14 +107,14 @@ protected:
 
 // ----------------------------------------------------------------------//
 template<class V>
-void CSquirrel::AddRootSlot(const char* name, V* val)
+void CSquirrel::AddRootSlot(const SQChar* name, V* val)
 {
 	m_rootTable->SetInstance(name, val);
 }
 
 // ----------------------------------------------------------------------//
 template<class V>
-void CSquirrel::AddConstSlot(const char* name, V* val)
+void CSquirrel::AddConstSlot(const SQChar* name, V* val)
 {
 	m_constTable->Enum(name, val);
 }

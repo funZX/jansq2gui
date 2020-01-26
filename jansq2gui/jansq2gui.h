@@ -90,4 +90,29 @@ namespace jansq2gui
 #define jansq2gui_memcmp					zpl_memcompare
 #define jansq2gui_memset					zpl_memset
 
+namespace jansq2gui
+{
+    class Window
+    {
+    public:
+        u32             Width;
+        u32             Height;
+        zpl_string      Title;
+
+        Window(): Width(640), Height(480), Title("jansq2gui") {};
+
+        void        setWidth(u32 w);
+        u32         getWidth();
+
+        void        setHeight(u32 h);
+        u32         getHeight();
+
+        void        setTitle(zpl_string title);
+        zpl_string  getTitle();
+    };
+};
+
+extern jansq2gui::Window jansq2guiWindow;
+
 #endif // __JANSQ2GUI_H
+

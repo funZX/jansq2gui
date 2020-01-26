@@ -22,71 +22,21 @@
 *    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 *    SOFTWARE.
 */
-#include <fstream>
 
-#include <jansq2gui.h>
-#include <jansq2gui_script.h>
 #include <jansq2gui_squirrel.h>
 
-static jansq2gui::CSquirrel    vm;
-static jansq2gui::CScript      nut(&vm);
-
 // ----------------------------------------------------------------------//
 
-int main(int argc, char** argv)
+zpl_f32 jansq2gui__Zpl_Sin(zpl_f32 a)
 {
-    if (argc != 2)
-    {
-        jansq2gui_error( "Usage: jansq2gui file.nut [width height]" );
-        return 1;
-    }
-   
-    const char* filename = argv[1];
+    return zpl_sin(a);
+}
 
-    if (!zpl_fs_exists(filename))
-    {
-        jansq2gui_error("File not found %s", filename);
-        return 1;
-    }
-
-    if (!nut.Load(filename))
-    {
-        jansq2gui_error("Failed to load %s", filename);
-        return 1;
-    }
-
-    nut.Run();
-
-    ImImpl_InitParams ini;
-    ini.gWindowSize.x = jansq2guiWindow.Width;
-    ini.gWindowSize.y = jansq2guiWindow.Height;
-    jansq2gui_memcpy(ini.gWindowTitle, jansq2guiWindow.Title, zpl_strlen(jansq2guiWindow.Title) + 1);
-
-    ImImpl_Main(&ini, argc, argv);
-
-    return 0;
+void jansq2gui::CSquirrel::BindZpl()
+{
+    Sqrat::Table zpl(m_vm);
+    zpl.Func("sin", &jansq2gui__Zpl_Sin);
+    m_rootTable->Bind("zpl", zpl);
 }
 
 // ----------------------------------------------------------------------//
-
-void DrawGL()
-{
-    static ImVec4 clearColor(0, 0, 0, 1);
-    ImImpl_ClearColorBuffer(clearColor);
-
-    vm.ExecVoidFunc("jansq2gui", "OnDraw");
-}
-
-// ----------------------------------------------------------------------//
-
-
-
-void InitGL()
-{
-}
-void ResizeGL(int w, int h)
-{
-}
-void DestroyGL()
-{
-}

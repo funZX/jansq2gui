@@ -27,18 +27,16 @@
 
 // ----------------------------------------------------------------------//
 
-bool jansq2gui__ImGui__ShowDemoWindow()
+bool jansq2gui__Sqlite_False()
 {
-    bool ret = false;
-    ImGui::ShowDemoWindow(&ret);
-    return ret;
+    return false;
 }
 
-void jansq2gui::CSquirrel::BindAll()
+void jansq2gui::CSquirrel::BindSqlite()
 {
-    Sqrat::Table imgui(m_vm);    
-    imgui.Func("ShowDemoWindow", &jansq2gui__ImGui__ShowDemoWindow);
-    m_rootTable->Bind("imgui", imgui);
+    Sqrat::Table sqlite(m_vm);    
+    sqlite.Func("false", &jansq2gui__Sqlite_False);
+    m_rootTable->Bind("sqlite", sqlite);
 }
 
 // ----------------------------------------------------------------------//

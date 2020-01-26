@@ -35,6 +35,8 @@ jansq2gui::CSquirrel::CSquirrel()
     , m_rootTable( jansq2gui_new Sqrat::RootTable( m_vm ) )
 	, m_constTable( jansq2gui_new Sqrat::ConstTable( m_vm ) )
 {
+    Sqrat::DefaultVM::Set( m_vm );
+
     sq_pushroottable( m_vm );
 
     sqstd_register_iolib( m_vm );
@@ -80,7 +82,7 @@ void jansq2gui::CSquirrel::PrintFunc( HSQUIRRELVM v, const SQChar *s, ... )
 {
     va_list vl;
     va_start( vl, s );
-    jansq2gui_echo( s, vl );
+    zpl_printf_va( s, vl );
     va_end( vl );
 }
 
@@ -142,12 +144,44 @@ void jansq2gui::CSquirrel::SetErrorHandler( SQFUNCTION runErr, SQCOMPILERERROR c
 
 // ----------------------------------------------------------------------//
 
+void jansq2gui::CSquirrel::ExecVoidFunc(const SQChar* slot, const SQChar* func )
+{
+    sq_pushroottable( m_vm );
+    sq_pushstring( m_vm, slot, -1 );
+    sq_get( m_vm, -2 );
+    sq_pushstring( m_vm, func, -1 );
+    sq_get( m_vm, -2 );
+    sq_pushroottable( m_vm );
+    sq_call( m_vm, 1, SQTrue, Sqrat::ErrorHandling::IsEnabled());
+    sq_pop( m_vm, 2 );
+}
+
+// ----------------------------------------------------------------------//
+
 jansq2gui::CSquirrel::K_ERROR jansq2gui::CSquirrel::Exec( jansq2gui::CScript* script )
 {
     Sqrat::string msg;
 	return script->Run( msg ) ? k_Error_None : k_Error_Runtime;
 }
 
+// ----------------------------------------------------------------------//
+
+void jansq2gui::CSquirrel::BindAll()
+{
+    BindImGui();
+    BindZpl();
+    BindSqlite();
+    BindJson();
+
+    Sqrat::Class<Window> Window(m_vm, "Window");
+    Window.Prop(_SC("Width"),  &Window::getWidth,  &Window::setWidth);
+    Window.Prop(_SC("Height"), &Window::getHeight, &Window::setHeight);
+    Window.Prop(_SC("Title"),  &Window::getTitle,  &Window::setTitle);
+
+    m_rootTable->SetInstance(_SC("jansq2gui"), &jansq2guiWindow);
+}
+
+// ----------------------------------------------------------------------//
 
 #if JANSQ2GUI_WITH_DEBUGGER
 // ----------------------------------------------------------------------//
