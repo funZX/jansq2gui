@@ -154,28 +154,29 @@ jansq2gui::CSquirrel::K_ERROR jansq2gui::CSquirrel::Exec( jansq2gui::CScript* sc
 
 void jansq2gui::CSquirrel::DebuggerStart()
 {
-	if (!m_rdbg)
-	{
-		m_rdbg = sq_rdbg_init(m_vm, 20900, SQTrue);
+    if (m_rdbg)
+        return;
 
-		sq_enabledebuginfo(m_vm, SQTrue);
+    m_rdbg = sq_rdbg_init(m_vm, 20900, SQTrue);
+    jansq2gui_assert(m_rdbg, "Debugger failed to start!");
 
-		auto start_task = async::spawn([&, this] {
-			sq_rdbg_waitforconnections(m_rdbg);
-		});
+    sq_enabledebuginfo(m_vm, SQTrue);
 
-		auto stop_task = start_task.then([&, this] {
+    auto start_task = async::spawn([&, this] {
+        sq_rdbg_waitforconnections(m_rdbg);
+    });
 
-			while (!m_rdbg->_terminate)
-				sq_rdbg_update(m_rdbg);
+    auto stop_task = start_task.then([&, this] {
 
-			sq_rdbg_shutdown(m_rdbg);
+        while (!m_rdbg->_terminate)
+            sq_rdbg_update(m_rdbg);
 
-			m_rdbg = nullptr;
-            if(!m_rdbg_shutdown)
-			    DebuggerStart();
-		});
-	}
+        sq_rdbg_shutdown(m_rdbg);
+
+        m_rdbg = nullptr;
+        if (!m_rdbg_shutdown)
+            DebuggerStart();
+     });
 }
 
 void jansq2gui::CSquirrel::DebuggerStop()

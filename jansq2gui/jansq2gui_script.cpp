@@ -25,13 +25,13 @@
 
 #include <jansq2gui_script.h>
 #include <jansq2gui_squirrel.h>
-#include <jansq2gui_mem_stream.h>
 
 // ----------------------------------------------------------------------//
 	
 jansq2gui::CScript::CScript( CSquirrel* sq )
 	:Sqrat::Script( sq->GetSQVM() )
 {
+
 }
 
 // ----------------------------------------------------------------------//
@@ -43,20 +43,14 @@ jansq2gui::CScript::~CScript()
 
 // ----------------------------------------------------------------------//
 
-SQInteger jansq2gui::CScript::Read(SQUserPointer pObj, SQUserPointer pDest, SQInteger size)
+bool jansq2gui::CScript::Load(const SQChar* filename)
 {
-	CMemStream* ms = reinterpret_cast<CMemStream *>(pObj);
+    SQRESULT result = sqstd_loadfile(vm, filename, SQTrue);
 
-	void* buffer	= ms->Read(size);
+    sq_getstackobj(vm, -1, &obj);
+    sq_addref(vm, &obj);
+    sq_pop(vm, 1);
 
-	if( buffer != nullptr )
-	{
-		zpl_memcopy(reinterpret_cast<char *>(pDest), buffer, size);
-
-		return size;
-	}
-
-	return -1;
+    return SQ_OK == result;
 }
-
 // ----------------------------------------------------------------------//

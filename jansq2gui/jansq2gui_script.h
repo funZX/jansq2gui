@@ -40,8 +40,7 @@ public:
 	CScript( CSquirrel* sq );
     ~CScript();
 
-protected:
-	static SQInteger				Read(SQUserPointer pMemObject, SQUserPointer pDest, SQInteger size);
+    virtual bool    				Load(const SQChar* filename);
 };
 
 // ----------------------------------------------------------------------//

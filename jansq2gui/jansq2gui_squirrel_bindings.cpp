@@ -27,9 +27,18 @@
 
 // ----------------------------------------------------------------------//
 
+bool jansq2gui__ImGui__ShowDemoWindow()
+{
+    bool ret = false;
+    ImGui::ShowDemoWindow(&ret);
+    return ret;
+}
+
 void jansq2gui::CSquirrel::BindAll()
 {
-
+    Sqrat::Table imgui(m_vm);    
+    imgui.Func("ShowDemoWindow", &jansq2gui__ImGui__ShowDemoWindow);
+    m_rootTable->Bind("imgui", imgui);
 }
 
 // ----------------------------------------------------------------------//

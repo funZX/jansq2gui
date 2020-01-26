@@ -67,8 +67,13 @@ namespace jansq2gui
 
 	typedef size_t 			handle;
 	typedef zpl_i32 		result;
+};
 
-}; // namespace jansq2gui
+namespace jansq2gui
+{
+    class CScript;
+    class CSquirrel;
+}
 
 #define jansq2gui_assert( x, ... )			ZPL_ASSERT_MSG(x, __FUNCTION__, __VA_ARGS__)
 

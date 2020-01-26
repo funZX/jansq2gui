@@ -22,37 +22,71 @@
 *    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 *    SOFTWARE.
 */
+#include <fstream>
 
 #include <jansq2gui.h>
+#include <jansq2gui_script.h>
+#include <jansq2gui_squirrel.h>
 
-void InitGL()
+static jansq2gui::CSquirrel    vm;
+static jansq2gui::CScript      nut(&vm);
+
+// ----------------------------------------------------------------------//
+
+int main(int argc, char** argv)
 {
+    if (argc != 2 && argc != 4)
+    {
+        jansq2gui_error( "Usage: jansq2gui file.nut [width height]" );
+        return 1;
+    }
+    const char* filename = argv[1];
+    int width   = argc == 4 ? zpl_str_to_f32(argv[2], 0) : 480;
+    int height  = argc == 4 ? zpl_str_to_f32(argv[3], 0) : 320;
 
+    std::ifstream infile(filename);
+    if (!infile.good())
+    {
+        jansq2gui_error("File not found %s", filename);
+        return 1;
+    }
+
+    if (!nut.Load(filename))
+    {
+        jansq2gui_error("Failed to load %s", filename);
+        return 1;
+    }
+
+    ImImpl_InitParams ini;
+    ini.gWindowSize.x = width;
+    ini.gWindowSize.y = height;
+    jansq2gui_memcpy(ini.gWindowTitle, filename, zpl_strlen(filename) + 1);
+
+    ImImpl_Main(&ini, argc, argv);
+
+    return 0;
 }
 
-void ResizeGL(int w, int h)
-{
-
-}
-
-void DestroyGL()
-{
-
-}
+// ----------------------------------------------------------------------//
 
 void DrawGL()
 {
     static ImVec4 clearColor(0, 0, 0, 1);
     ImImpl_ClearColorBuffer(clearColor);
-    
-    ImGui::ShowDemoWindow();
+
+    nut.Run();
 }
 
+// ----------------------------------------------------------------------//
 
-int main(int argc, char** argv)
+
+
+void InitGL()
 {
-   ImImpl_Main(NULL, argc, argv);
-   
-   return 0;
 }
-
+void ResizeGL(int w, int h)
+{
+}
+void DestroyGL()
+{
+}
