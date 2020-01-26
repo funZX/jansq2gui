@@ -36,6 +36,9 @@ solution "jansq2gui"
 			"IMIMPL_SHADER_GLES",
 			"LIBASYNC_STATIC",
 		}
+		libdirs {
+			path.join(prjDir, "../build/bin/Debug"),
+		}
 
     configuration "Release"
         targetdir "bin/Release"	
@@ -51,8 +54,16 @@ solution "jansq2gui"
 			"IMIMPL_SHADER_GLES",
 			"LIBASYNC_STATIC",			
 		}
+		libdirs {
+			path.join(prjDir, "../build/bin/Release"),
+		}		
+
+	configuration { "*", "x64" }
+		defines {
+			"_SQ64",
+		}
 		
-	configuration { "vs*", "x32 or x64" }
+	configuration { "vs*" }
 		flags { 
 			"FullSymbols"
 		}
@@ -62,10 +73,15 @@ solution "jansq2gui"
 			"_GLFW_WIN32",
 		}
 
-	configuration { "linux-*", "x32 or x64" }
+	configuration { "not vs*" }
 		defines {
 			"LINUX",
 			"_GLFW_X11",
+		}
+		links {
+			"pthread",
+			"dl",
+			"X11"
 		}
 		
 -----------------------------------------------------------------
@@ -114,10 +130,7 @@ project ("jansq2gui")
 	links {
 		"3rdparty",
 	}
-	
-	libdirs {
-		path.join(prjDir, "../build/**"),
-	}
+
 -----------------------------------------------------------------
 		
 project ("3rdparty")
@@ -240,7 +253,7 @@ project ("3rdparty")
 		path.join(localDir, "zpl-c/zpl/code/source/**.c"),
 	}
 	
-	configuration { "vs*", "x32 or x64" }
+	configuration { "vs*" }
 		files {
 			path.join(localDir, "glfw/src/win32_platform.h"),
 			path.join(localDir, "glfw/src/win32_joystick.h"),
@@ -254,7 +267,7 @@ project ("3rdparty")
 			path.join(localDir, "glfw/src/wgl_context.c"),
 		}
 
-	configuration { "linux-*", "x32 or x64" }
+	configuration { "not vs*" }
 		files {
 			path.join(localDir, "glfw/src/x11_platform.h"),
 			path.join(localDir, "glfw/src/xkb_unicode.h"),
@@ -268,6 +281,7 @@ project ("3rdparty")
 			path.join(localDir, "glfw/src/posix_time.c"),
 			path.join(localDir, "glfw/src/posix_thread.c"),
 			path.join(localDir, "glfw/src/glx_context.c"),
+			path.join(localDir, "glfw/src/linux_joystick.c"),
 		}
 -----------------------------------------------------------------
 -----------------------------------------------------------------
