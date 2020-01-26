@@ -24,6 +24,7 @@ solution "jansq2gui"
     configuration "Debug"
         targetdir "bin/Debug"
 		debugdir "bin/Debug"
+		flags { "Symbols", "NoRTTI" }
 		defines { 
 			"DEBUG",
 			"JANSQ2GUI_WITH_DEBUGGER",
@@ -37,6 +38,10 @@ solution "jansq2gui"
     configuration "Release"
         targetdir "bin/Release"	
 		debugdir "bin/Release"
+		flags {
+			"OptimizeSpeed",
+			"NoRTTI"
+		}
 		defines {
 			"NDEBUG",
 			
@@ -47,8 +52,11 @@ solution "jansq2gui"
 		}
 		
 	configuration { "vs*", "x32 or x64" }
+		flags { 
+			"FullSymbols"
+		}
 		defines {
-			"WIN32", "_WIN32",
+			"WIN32", "_WIN32", "_MBCS",
 			"WIN32_LEAN_AND_MEAN",
 			"_GLFW_WIN32",
 		}
