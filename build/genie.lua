@@ -24,7 +24,9 @@ solution "jansq2gui"
     configuration "Debug"
         targetdir "bin/Debug"
 		debugdir "bin/Debug"
-		flags { "Symbols", "NoRTTI" }
+		flags { 
+			"Symbols" 
+		}
 		defines { 
 			"DEBUG",
 			"JANSQ2GUI_WITH_DEBUGGER",
@@ -40,7 +42,6 @@ solution "jansq2gui"
 		debugdir "bin/Release"
 		flags {
 			"OptimizeSpeed",
-			"NoRTTI"
 		}
 		defines {
 			"NDEBUG",
@@ -136,6 +137,7 @@ project ("3rdparty")
 		path.join(localDir, "zpl-c/librg/include"),
 
 		path.join(localDir, "asyncplusplus/include"),
+		path.join(localDir, "sigcxx/include"),
 		
 		path.join(localDir, "jansson/src"),
 		path.join(localDir, "jansson/janssonxx"),
@@ -174,6 +176,10 @@ project ("3rdparty")
 		path.join(localDir, "asyncplusplus/src/**.cpp"),
 		path.join(localDir, "asyncplusplus/src/**.h"),
 
+		path.join(localDir, "sigcxx/include/**.hpp"),
+		path.join(localDir, "sigcxx/src/**.cpp"),
+		path.join(localDir, "sigcxx/src/**.h"),		
+		
 		path.join(localDir, "jansson/include/**.h"),
 		path.join(localDir, "jansson/src/**.c"),
 		path.join(localDir, "jansson/src/**.h"),
@@ -197,6 +203,7 @@ project ("3rdparty")
 		path.join(localDir, "imgui/addons/**.cpp"),
 		path.join(localDir, "imgui/addons/**.h"),
 		
+		path.join(localDir, "zpl-c/zpl/code/*.h"),
 		path.join(localDir, "zpl-c/zpl/code/header/**.h"),
 		path.join(localDir, "zpl-c/zpl/code/other/**.h"),
 		path.join(localDir, "zpl-c/zpl/code/source/**.c"),

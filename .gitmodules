@@ -25,3 +25,6 @@
 [submodule "3rdparty/asyncplusplus"]
 	path = 3rdparty/asyncplusplus
 	url = git@github.com:Amanieu/asyncplusplus.git
+[submodule "3rdparty/sigcxx"]
+	path = 3rdparty/sigcxx
+	url = git@github.com:funZX/sigcxx.git

@@ -111,7 +111,7 @@ void CSquirrel::AddRootSlot(const char* name, V* val)
 template<class V>
 void CSquirrel::AddConstSlot(const char* name, V* val)
 {
-	m_constTable->SetInstance(name, val);
+	m_constTable->Enum(name, val);
 }
 
 // ----------------------------------------------------------------------//
