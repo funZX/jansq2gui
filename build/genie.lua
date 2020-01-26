@@ -185,7 +185,9 @@ project ("3rdparty")
 		path.join(localDir, "imgui/imgui_*.cpp"),
 		path.join(localDir, "imgui/imgui_*.h"),
 		path.join(localDir, "imgui/imstb_*.cpp"),
-		path.join(localDir, "imgui/imstb_*.h"),
+		path.join(localDir, "imgui/imstb_*.h"),		
+		path.join(localDir, "imgui/addons/**.cpp"),
+		path.join(localDir, "imgui/addons/**.h"),
 		
 		path.join(localDir, "zpl-c/zpl/code/header/**.h"),
 		path.join(localDir, "zpl-c/zpl/code/other/**.h"),
@@ -218,7 +220,9 @@ project ("3rdparty")
 	}
 	
 	excludes {
-		path.join(localDir, "zpl-c/zpl/code/source/**.c"),	
+		path.join(localDir, "imgui/addons/**.cpp"),
+		path.join(localDir, "imgui/addons/**.h"),	
+		path.join(localDir, "zpl-c/zpl/code/source/**.c"),
 	}
 	
 	configuration { "vs*", "x32 or x64" }
