@@ -92,27 +92,44 @@ namespace jansq2gui
 
 namespace jansq2gui
 {
-    class Window
+    class Api
     {
     public:
-        u32             Width;
-        u32             Height;
-        zpl_string      Title;
+        Api(): Width(640), Height(480), Title("jansq2gui"), Ok(false) {};
 
-        Window(): Width(640), Height(480), Title("jansq2gui") {};
+    public:
+        u32         Width;
+        u32         Height;
+        zpl_string  Title;
+        bool        Ok;
 
-        void        setWidth(u32 w);
-        u32         getWidth();
+    public:
 
-        void        setHeight(u32 h);
-        u32         getHeight();
+        bool        jansq2gui__Init(zpl_string Title, u32 Width, u32 Height, Sqrat::Function func);
+        bool        jansq2gui__Term(Sqrat::Function func);
 
-        void        setTitle(zpl_string title);
-        zpl_string  getTitle();
+        bool        jansq2gui__ImGui__ShowDemoWindow();
+        bool        jansq2gui__ImGui__ShowAboutWindow();
+        bool        jansq2gui__ImGui__ShowMetricsWindow();
+
+        void        jansq2gui__ImGui__Begin1(const char* name);
+        void        jansq2gui__ImGui__Begin2(const char* name, bool* p_open);
+        void        jansq2gui__ImGui__Begin3(const char* name, bool* p_open, ImGuiWindowFlags flags);
+
+        bool        jansq2gui__ImGui__BeginChild11(const char* str_id);
+        bool        jansq2gui__ImGui__BeginChild12(const char* str_id, const ImVec2& size);
+        bool        jansq2gui__ImGui__BeginChild13(const char* str_id, const ImVec2& size, bool border);
+        bool        jansq2gui__ImGui__BeginChild14(const char* str_id, const ImVec2& size, bool border, ImGuiWindowFlags flags);
+
+        bool        jansq2gui__ImGui__BeginChild21(ImGuiID id);
+        bool        jansq2gui__ImGui__BeginChild22(ImGuiID id, const ImVec2& size);
+        bool        jansq2gui__ImGui__BeginChild23(ImGuiID id, const ImVec2& size, bool border);
+        bool        jansq2gui__ImGui__BeginChild24(ImGuiID id, const ImVec2& size, bool border, ImGuiWindowFlags flags);
+
     };
 };
 
-extern jansq2gui::Window jansq2guiWindow;
+extern jansq2gui::Api jansq2guiApi;
 
 #endif // __JANSQ2GUI_H
 

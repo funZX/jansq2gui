@@ -63,21 +63,23 @@ public:
     void							SetPrintFunc(SQPRINTFUNCTION printFunc, SQPRINTFUNCTION errFunc);
     void							SetErrorHandler(SQFUNCTION runErr, SQCOMPILERERROR comErr);
 
+    void                            ExecVoidFunc( const SQChar* func );
     void                            ExecVoidFunc( const SQChar* slot, const SQChar* func);
     K_ERROR							Exec( CScript* script );
-	// ------------------------------------------------------------------//
-protected:
-	// ------------------------------------------------------------------//
-#if JANSQ2GUI_WITH_DEBUGGER
-	void							DebuggerStart();
-	void							DebuggerStop();
-#endif // JANSQ2GUI_WITH_DEBUGGER
+
+    void							DebugOn();
+    void							DebugOff();
 
 	// ------------------------------------------------------------------//
-    void							BindImGui();
-    void							BindZpl();
-    void							BindSqlite();
-    void							BindJson();
+protected:
+
+	// ------------------------------------------------------------------//
+    void		                    BindImGui(Sqrat::Class<jansq2gui::Api>& api);
+    void		                    BindZpl(Sqrat::Class<jansq2gui::Api>& api);
+    void		                    BindEnet(Sqrat::Class<jansq2gui::Api>& api);
+    void		                    BindLibrg(Sqrat::Class<jansq2gui::Api>& api);
+    void		                    BindSqlite(Sqrat::Class<jansq2gui::Api>& api);
+    void		                    BindJson(Sqrat::Class<jansq2gui::Api>& api);
 
 	void							BindAll();
 	// ------------------------------------------------------------------//
@@ -98,10 +100,8 @@ protected:
 	Sqrat::ConstTable*				m_constTable;
     static Sqrat::string			m_lastErrorMsg;
 
-#if JANSQ2GUI_WITH_DEBUGGER
 	HSQREMOTEDBG					m_rdbg;
     bool                            m_rdbg_shutdown;
-#endif // JANSQ2GUI_WITH_DEBUGGER
 	// ------------------------------------------------------------------//
 };
 

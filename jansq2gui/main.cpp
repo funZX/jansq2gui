@@ -55,12 +55,13 @@ int main(int argc, char** argv)
         return 1;
     }
 
+    vm.DebugOn();
     nut.Run();
 
     ImImpl_InitParams ini;
-    ini.gWindowSize.x = jansq2guiWindow.Width;
-    ini.gWindowSize.y = jansq2guiWindow.Height;
-    jansq2gui_memcpy(ini.gWindowTitle, jansq2guiWindow.Title, zpl_strlen(jansq2guiWindow.Title) + 1);
+    ini.gWindowSize.x = jansq2guiApi.Width;
+    ini.gWindowSize.y = jansq2guiApi.Height;
+    jansq2gui_memcpy(ini.gWindowTitle, jansq2guiApi.Title, zpl_strlen(jansq2guiApi.Title) + 1);
 
     ImImpl_Main(&ini, argc, argv);
 
@@ -74,7 +75,7 @@ void DrawGL()
     static ImVec4 clearColor(0, 0, 0, 1);
     ImImpl_ClearColorBuffer(clearColor);
 
-    vm.ExecVoidFunc("jansq2gui", "OnDraw");
+    vm.ExecVoidFunc("jansq2gui", "Main");
 }
 
 // ----------------------------------------------------------------------//

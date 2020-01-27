@@ -27,14 +27,14 @@
 
 // ----------------------------------------------------------------------//
 
-bool jansq2gui__Json_False()
+bool jansq2gui__Enet_False()
 {
     return false;
 }
 
-void jansq2gui::CSquirrel::BindJson(Sqrat::Class<jansq2gui::Api>& api)
+void jansq2gui::CSquirrel::BindEnet(Sqrat::Class<jansq2gui::Api>& api)
 {
-    api.StaticFunc(_SC("json_false"), &jansq2gui__Json_False);
+    api.StaticFunc(_SC("enet_false"), &jansq2gui__Enet_False);
 }
 
 // ----------------------------------------------------------------------//

@@ -32,11 +32,9 @@ bool jansq2gui__Sqlite_False()
     return false;
 }
 
-void jansq2gui::CSquirrel::BindSqlite()
+void jansq2gui::CSquirrel::BindSqlite(Sqrat::Class<jansq2gui::Api>& api)
 {
-    Sqrat::Table sqlite(m_vm);    
-    sqlite.Func("false", &jansq2gui__Sqlite_False);
-    m_rootTable->Bind("sqlite", sqlite);
+    api.StaticFunc(_SC("sqlite_false"), &jansq2gui__Sqlite_False);
 }
 
 // ----------------------------------------------------------------------//

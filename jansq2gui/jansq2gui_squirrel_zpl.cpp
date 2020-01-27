@@ -27,16 +27,9 @@
 
 // ----------------------------------------------------------------------//
 
-zpl_f32 jansq2gui__Zpl_Sin(zpl_f32 a)
+void jansq2gui::CSquirrel::BindZpl(Sqrat::Class<jansq2gui::Api>& api)
 {
-    return zpl_sin(a);
-}
-
-void jansq2gui::CSquirrel::BindZpl()
-{
-    Sqrat::Table zpl(m_vm);
-    zpl.Func("sin", &jansq2gui__Zpl_Sin);
-    m_rootTable->Bind("zpl", zpl);
+    api.StaticFunc(_SC("zpl_sin"), &zpl_sin);
 }
 
 // ----------------------------------------------------------------------//

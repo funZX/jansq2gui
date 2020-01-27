@@ -53,23 +53,20 @@ jansq2gui::CSquirrel::CSquirrel()
 
 	BindAll();
 
-#if JANSQ2GUI_WITH_DEBUGGER
 	m_rdbg = nullptr;
     m_rdbg_shutdown = false;
-	DebuggerStart();
-#endif // JANSQ2GUI_WITH_DEBUGGER
 }
 
 // ----------------------------------------------------------------------//
 
 jansq2gui::CSquirrel::~CSquirrel()
 {
-#if JANSQ2GUI_WITH_DEBUGGER
     m_rdbg_shutdown = true;
-	if (m_rdbg)
-		DebuggerStop();
-    while (m_rdbg);
-#endif // JANSQ2GUI_WITH_DEBUGGER
+    
+    if (m_rdbg)
+        DebugOff();
+    while (m_rdbg)
+        zpl_sleep_ms(10);
 
 	jansq2gui_delete( m_constTable );
     delete( m_rootTable );
@@ -144,6 +141,18 @@ void jansq2gui::CSquirrel::SetErrorHandler( SQFUNCTION runErr, SQCOMPILERERROR c
 
 // ----------------------------------------------------------------------//
 
+void jansq2gui::CSquirrel::ExecVoidFunc(const SQChar* func)
+{
+    sq_pushroottable(m_vm);
+    sq_pushstring(m_vm, func, -1);
+    sq_get(m_vm, -2);
+    sq_pushroottable(m_vm);
+    sq_call(m_vm, 1, SQTrue, Sqrat::ErrorHandling::IsEnabled());
+    sq_pop(m_vm, 2);
+}
+
+// ----------------------------------------------------------------------//
+
 void jansq2gui::CSquirrel::ExecVoidFunc(const SQChar* slot, const SQChar* func )
 {
     sq_pushroottable( m_vm );
@@ -168,25 +177,24 @@ jansq2gui::CSquirrel::K_ERROR jansq2gui::CSquirrel::Exec( jansq2gui::CScript* sc
 
 void jansq2gui::CSquirrel::BindAll()
 {
-    BindImGui();
-    BindZpl();
-    BindSqlite();
-    BindJson();
+    Sqrat::Class<jansq2gui::Api> api(m_vm, "api");
 
-    Sqrat::Class<Window> Window(m_vm, "Window");
-    Window.Prop(_SC("Width"),  &Window::getWidth,  &Window::setWidth);
-    Window.Prop(_SC("Height"), &Window::getHeight, &Window::setHeight);
-    Window.Prop(_SC("Title"),  &Window::getTitle,  &Window::setTitle);
+    api.Func(_SC("Init"),    &jansq2gui::Api::jansq2gui__Init);
+    api.Func(_SC("Term"),    &jansq2gui::Api::jansq2gui__Term);
 
-    m_rootTable->SetInstance(_SC("jansq2gui"), &jansq2guiWindow);
+    BindImGui(api);
+    BindZpl(api);
+    BindEnet(api);
+    BindLibrg(api);
+    BindSqlite(api);
+    BindJson(api);
+
+    m_rootTable->SetInstance(_SC("jansq2gui"), &jansq2guiApi);
 }
 
 // ----------------------------------------------------------------------//
 
-#if JANSQ2GUI_WITH_DEBUGGER
-// ----------------------------------------------------------------------//
-
-void jansq2gui::CSquirrel::DebuggerStart()
+void jansq2gui::CSquirrel::DebugOn()
 {
     if (m_rdbg)
         return;
@@ -209,11 +217,11 @@ void jansq2gui::CSquirrel::DebuggerStart()
 
         m_rdbg = nullptr;
         if (!m_rdbg_shutdown)
-            DebuggerStart();
+            DebugOn();
      });
 }
 
-void jansq2gui::CSquirrel::DebuggerStop()
+void jansq2gui::CSquirrel::DebugOff()
 {
 	if (m_rdbg)
 	{
@@ -223,6 +231,4 @@ void jansq2gui::CSquirrel::DebuggerStop()
 }
 
 // ----------------------------------------------------------------------//
-
-#endif // JANSQ2GUI_WITH_DEBUGGER
 

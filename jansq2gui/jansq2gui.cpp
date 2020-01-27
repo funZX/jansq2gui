@@ -25,34 +25,21 @@
 
 #include <jansq2gui.h>
 
-jansq2gui::Window jansq2guiWindow;
+jansq2gui::Api jansq2guiApi;
 
-void jansq2gui::Window::setWidth(u32 w)
+bool jansq2gui::Api::jansq2gui__Init(zpl_string title, u32 width, u32 height, Sqrat::Function func)
 {
-    Width = w;
+    Title   = title;
+    Width   = width;
+    Height  = height;
+    Ok      = true;
+
+    auto ret = func.Evaluate<bool>(Title, Width, Height);
+    return ret.Get();
 }
 
-u32 jansq2gui::Window::getWidth()
+bool jansq2gui::Api::jansq2gui__Term(Sqrat::Function func)
 {
-    return Width;
-}
-
-void jansq2gui::Window::setHeight(u32 h)
-{
-    Height = h;
-}
-
-u32 jansq2gui::Window::getHeight()
-{
-    return Height;
-}
-
-void jansq2gui::Window::setTitle(zpl_string title)
-{
-    Title = title;
-}
-
-zpl_string jansq2gui::Window::getTitle()
-{
-    return Title;
+    auto ret = func.Evaluate<bool>();
+    return ret.Get();
 }

@@ -29,7 +29,6 @@ solution "jansq2gui"
 		}
 		defines { 
 			"DEBUG",
-			"JANSQ2GUI_WITH_DEBUGGER",
 			
 			"IMGUI_USE_GLAD",
 			"IMGUI_USE_GLFW_BINDING",

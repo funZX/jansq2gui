@@ -27,18 +27,104 @@
 
 // ----------------------------------------------------------------------//
 
-bool jansq2gui__ImGui__ShowDemoWindow()
+bool jansq2gui::Api::jansq2gui__ImGui__ShowDemoWindow()
 {
     bool ret = false;
     ImGui::ShowDemoWindow(&ret);
     return ret;
 }
 
-void jansq2gui::CSquirrel::BindImGui()
+bool jansq2gui::Api::jansq2gui__ImGui__ShowAboutWindow()
 {
-    Sqrat::Table imgui(m_vm);    
-    imgui.Func("ShowDemoWindow", &jansq2gui__ImGui__ShowDemoWindow);
-    m_rootTable->Bind("imgui", imgui);
+    bool ret = false;
+    ImGui::ShowAboutWindow(&ret);
+    return ret;
 }
 
+bool jansq2gui::Api::jansq2gui__ImGui__ShowMetricsWindow()
+{
+    bool ret = false;
+    ImGui::ShowMetricsWindow(&ret);
+    return ret;
+}
+
+void jansq2gui::Api::jansq2gui__ImGui__Begin1(const char* name)
+{
+    ImGui::Begin(name, 0, 0);
+}
+
+void jansq2gui::Api::jansq2gui__ImGui__Begin2(const char* name, bool* p_open)
+{
+    ImGui::Begin(name, p_open, 0);
+}
+
+void jansq2gui::Api::jansq2gui__ImGui__Begin3(const char* name, bool* p_open, ImGuiWindowFlags flags)
+{
+    ImGui::Begin(name, p_open, flags);
+}
+
+bool jansq2gui::Api::jansq2gui__ImGui__BeginChild11(const char* str_id)
+{
+    return ImGui::BeginChild(str_id, ImVec2(0, 0), false, 0);
+}
+
+bool jansq2gui::Api::jansq2gui__ImGui__BeginChild12(const char* str_id, const ImVec2& size)
+{
+    return ImGui::BeginChild(str_id, size, false, 0);
+}
+
+bool jansq2gui::Api::jansq2gui__ImGui__BeginChild13(const char* str_id, const ImVec2& size, bool border)
+{
+    return ImGui::BeginChild(str_id, size, border, 0);
+}
+
+bool jansq2gui::Api::jansq2gui__ImGui__BeginChild14(const char* str_id, const ImVec2& size, bool border, ImGuiWindowFlags flags)
+{
+    return ImGui::BeginChild(str_id, size, border, flags);
+}
+
+bool jansq2gui::Api::jansq2gui__ImGui__BeginChild21(ImGuiID id)
+{
+    return ImGui::BeginChild(id, ImVec2(0, 0), false, 0);
+}
+
+bool jansq2gui::Api::jansq2gui__ImGui__BeginChild22(ImGuiID id, const ImVec2& size)
+{
+    return ImGui::BeginChild(id, size, false, 0);
+}
+
+bool jansq2gui::Api::jansq2gui__ImGui__BeginChild23(ImGuiID id, const ImVec2& size, bool border)
+{
+    return ImGui::BeginChild(id, size, border, 0);
+}
+
+bool jansq2gui::Api::jansq2gui__ImGui__BeginChild24(ImGuiID id, const ImVec2& size, bool border, ImGuiWindowFlags flags)
+{
+    return ImGui::BeginChild(id, size, border, flags);
+}
+
+void jansq2gui::CSquirrel::BindImGui(Sqrat::Class<jansq2gui::Api>& api )
+{
+    api.StaticFunc(_SC("igGetVersion"),      &ImGui::GetVersion);
+
+    api.Func(_SC("igShowDemoWindow"),        &jansq2gui::Api::jansq2gui__ImGui__ShowDemoWindow);
+    api.Func(_SC("igShowAboutWindow"),       &jansq2gui::Api::jansq2gui__ImGui__ShowAboutWindow);
+    api.Func(_SC("igShowMetricsWindow"),     &jansq2gui::Api::jansq2gui__ImGui__ShowMetricsWindow);
+
+    api.Overload(_SC("igBegin"),             &jansq2gui::Api::jansq2gui__ImGui__Begin1);
+    api.Overload(_SC("igBegin"),             &jansq2gui::Api::jansq2gui__ImGui__Begin2);
+    api.Overload(_SC("igBegin"),             &jansq2gui::Api::jansq2gui__ImGui__Begin3);
+    api.StaticFunc(_SC("igEnd"),             &ImGui::End);
+
+    api.Overload(_SC("igBeginChild"),        &jansq2gui::Api::jansq2gui__ImGui__BeginChild11);
+    api.Overload(_SC("igBeginChild"),        &jansq2gui::Api::jansq2gui__ImGui__BeginChild12);
+    api.Overload(_SC("igBeginChild"),        &jansq2gui::Api::jansq2gui__ImGui__BeginChild13);
+    api.Overload(_SC("igBeginChild"),        &jansq2gui::Api::jansq2gui__ImGui__BeginChild14);
+    api.Overload(_SC("igBeginChildId"),      &jansq2gui::Api::jansq2gui__ImGui__BeginChild21);
+    api.Overload(_SC("igBeginChildId"),      &jansq2gui::Api::jansq2gui__ImGui__BeginChild22);
+    api.Overload(_SC("igBeginChildId"),      &jansq2gui::Api::jansq2gui__ImGui__BeginChild23);
+    api.Overload(_SC("igBeginChildId"),      &jansq2gui::Api::jansq2gui__ImGui__BeginChild24);
+
+    api.StaticFunc(_SC("igEndChild"),        &ImGui::EndChild);
+}
 // ----------------------------------------------------------------------//
