@@ -34,5 +34,10 @@ void jansq2gui::Api::jansq2gui__Api_Init(zpl_string title, u32 width, u32 height
     jansq2guiApi.Height  = height;
     jansq2guiApi.Ok      = true;
 
+    func.Execute();
+}
+
+void jansq2gui::Api::jansq2gui__Run(Sqrat::Function func)
+{
     jansq2guiApi.RunFunc = func.GetFunc();
 }

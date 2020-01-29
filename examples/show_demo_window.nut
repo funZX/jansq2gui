@@ -12,6 +12,17 @@ function Run()
 	}
 	
 	jansq2gui.imgui_end();
+	
+	#util.Print("import util; util.Print");
 }
 
-jansq2gui__Api_Init("show_demo_window::jansq2gui__Main", 800, 600, ::Run);
+function Init()
+{
+	print(format("%s%s", jansq2gui.WorkDir, "util"))
+	#import(format("%s%s", jansq2gui.WorkDir, "util"));
+
+
+	jansq2gui__Run(::Run);
+}
+
+jansq2gui__Api_Init("show_demo_window", 800, 600, ::Init);
