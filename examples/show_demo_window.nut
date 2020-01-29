@@ -1,43 +1,17 @@
-
-initialized <- false
-terminated  <- false
-
-api <- jansq2gui;
-
-function on_init_callback(_title, _width, _height) {
-	print("\njansq2gui::Init");
-}
-initialized = api.Init("ShowDemoWindow", 800, 600, on_init_callback)
-
-
-
-
-jansq2gui <- {
-
-	function Main()
+function Run()
+{
+	jansq2gui.imgui_show_demo_window();
+	jansq2gui.imgui_show_about_window();
+	jansq2gui.imgui_show_metrics_window();
+	
+	jansq2gui.imgui_begin("Begin");
+	
+	if (jansq2gui.imgui_begin_child("BeginChild"))
 	{
-		api.igShowDemoWindow();
-		api.igShowAboutWindow();
-		api.igShowMetricsWindow();
-		
-		api.igBegin("Begin")
-		
-		if (api.igBeginChild("BeginChild"))
-		{
-			api.igEndChild();
-		}		
-		
-		if (api.igBeginChildId(1))
-		{
-			api.igEndChild();
-		}		
-		api.igEnd();
+		jansq2gui.imgui_end_child();
 	}
+	
+	jansq2gui.imgui_end();
 }
 
-
-function on_term_callback() {
-	print("\njansq2gui::Term");
-}
-terminated = api.Term(on_term_callback)
-
+jansq2gui__Api_Init("show_demo_window::jansq2gui__Main", 800, 600, ::Run);

@@ -55,8 +55,16 @@ int main(int argc, char** argv)
         return 1;
     }
 
+    jansq2guiApi.VM = vm.GetSQVM();
+
     vm.DebugOn();
     nut.Run();
+
+    if (OT_CLOSURE != jansq2guiApi.RunFunc._type)
+    {
+        jansq2gui_echo("Done!");
+        return 0;
+    }
 
     ImImpl_InitParams ini;
     ini.gWindowSize.x = jansq2guiApi.Width;
@@ -75,7 +83,7 @@ void DrawGL()
     static ImVec4 clearColor(0, 0, 0, 1);
     ImImpl_ClearColorBuffer(clearColor);
 
-    vm.ExecVoidFunc("jansq2gui", "Main");
+    vm.ExecMainFunc(jansq2guiApi.RunFunc);
 }
 
 // ----------------------------------------------------------------------//

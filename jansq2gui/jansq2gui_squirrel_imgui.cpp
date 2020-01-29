@@ -105,26 +105,26 @@ bool jansq2gui::Api::jansq2gui__ImGui__BeginChild24(ImGuiID id, const ImVec2& si
 
 void jansq2gui::CSquirrel::BindImGui(Sqrat::Class<jansq2gui::Api>& api )
 {
-    api.StaticFunc(_SC("igGetVersion"),      &ImGui::GetVersion);
+    api.StaticFunc(_SC("imgui_get_version"),       &ImGui::GetVersion);
 
-    api.Func(_SC("igShowDemoWindow"),        &jansq2gui::Api::jansq2gui__ImGui__ShowDemoWindow);
-    api.Func(_SC("igShowAboutWindow"),       &jansq2gui::Api::jansq2gui__ImGui__ShowAboutWindow);
-    api.Func(_SC("igShowMetricsWindow"),     &jansq2gui::Api::jansq2gui__ImGui__ShowMetricsWindow);
+    api.Func(_SC("imgui_show_demo_window"),        &jansq2gui::Api::jansq2gui__ImGui__ShowDemoWindow);
+    api.Func(_SC("imgui_show_about_window"),       &jansq2gui::Api::jansq2gui__ImGui__ShowAboutWindow);
+    api.Func(_SC("imgui_show_metrics_window"),     &jansq2gui::Api::jansq2gui__ImGui__ShowMetricsWindow);
 
-    api.Overload(_SC("igBegin"),             &jansq2gui::Api::jansq2gui__ImGui__Begin1);
-    api.Overload(_SC("igBegin"),             &jansq2gui::Api::jansq2gui__ImGui__Begin2);
-    api.Overload(_SC("igBegin"),             &jansq2gui::Api::jansq2gui__ImGui__Begin3);
-    api.StaticFunc(_SC("igEnd"),             &ImGui::End);
+    api.Overload(_SC("imgui_begin"),               &jansq2gui::Api::jansq2gui__ImGui__Begin1);
+    api.Overload(_SC("imgui_begin"),               &jansq2gui::Api::jansq2gui__ImGui__Begin2);
+    api.Overload(_SC("imgui_begin"),               &jansq2gui::Api::jansq2gui__ImGui__Begin3);
+    api.StaticFunc(_SC("imgui_end"),               &ImGui::End);
 
-    api.Overload(_SC("igBeginChild"),        &jansq2gui::Api::jansq2gui__ImGui__BeginChild11);
-    api.Overload(_SC("igBeginChild"),        &jansq2gui::Api::jansq2gui__ImGui__BeginChild12);
-    api.Overload(_SC("igBeginChild"),        &jansq2gui::Api::jansq2gui__ImGui__BeginChild13);
-    api.Overload(_SC("igBeginChild"),        &jansq2gui::Api::jansq2gui__ImGui__BeginChild14);
-    api.Overload(_SC("igBeginChildId"),      &jansq2gui::Api::jansq2gui__ImGui__BeginChild21);
-    api.Overload(_SC("igBeginChildId"),      &jansq2gui::Api::jansq2gui__ImGui__BeginChild22);
-    api.Overload(_SC("igBeginChildId"),      &jansq2gui::Api::jansq2gui__ImGui__BeginChild23);
-    api.Overload(_SC("igBeginChildId"),      &jansq2gui::Api::jansq2gui__ImGui__BeginChild24);
+    api.Overload(_SC("imgui_begin_child"),         &jansq2gui::Api::jansq2gui__ImGui__BeginChild11);
+    api.Overload(_SC("imgui_begin_child"),         &jansq2gui::Api::jansq2gui__ImGui__BeginChild12);
+    api.Overload(_SC("imgui_begin_child"),         &jansq2gui::Api::jansq2gui__ImGui__BeginChild13);
+    api.Overload(_SC("imgui_begin_child"),         &jansq2gui::Api::jansq2gui__ImGui__BeginChild14);
+    api.Overload(_SC("imgui_begin_child_id"),      &jansq2gui::Api::jansq2gui__ImGui__BeginChild21);
+    api.Overload(_SC("imgui_begin_child_id"),      &jansq2gui::Api::jansq2gui__ImGui__BeginChild22);
+    api.Overload(_SC("imgui_begin_child_id"),      &jansq2gui::Api::jansq2gui__ImGui__BeginChild23);
+    api.Overload(_SC("imgui_begin_child_id"),      &jansq2gui::Api::jansq2gui__ImGui__BeginChild24);
 
-    api.StaticFunc(_SC("igEndChild"),        &ImGui::EndChild);
+    api.StaticFunc(_SC("imgui_end_child"),         &ImGui::EndChild);
 }
 // ----------------------------------------------------------------------//

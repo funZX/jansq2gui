@@ -141,28 +141,12 @@ void jansq2gui::CSquirrel::SetErrorHandler( SQFUNCTION runErr, SQCOMPILERERROR c
 
 // ----------------------------------------------------------------------//
 
-void jansq2gui::CSquirrel::ExecVoidFunc(const SQChar* func)
+void jansq2gui::CSquirrel::ExecMainFunc(HSQOBJECT& func)
 {
+    sq_pushobject(m_vm, func);
     sq_pushroottable(m_vm);
-    sq_pushstring(m_vm, func, -1);
-    sq_get(m_vm, -2);
-    sq_pushroottable(m_vm);
-    sq_call(m_vm, 1, SQTrue, Sqrat::ErrorHandling::IsEnabled());
-    sq_pop(m_vm, 2);
-}
-
-// ----------------------------------------------------------------------//
-
-void jansq2gui::CSquirrel::ExecVoidFunc(const SQChar* slot, const SQChar* func )
-{
-    sq_pushroottable( m_vm );
-    sq_pushstring( m_vm, slot, -1 );
-    sq_get( m_vm, -2 );
-    sq_pushstring( m_vm, func, -1 );
-    sq_get( m_vm, -2 );
-    sq_pushroottable( m_vm );
-    sq_call( m_vm, 1, SQTrue, Sqrat::ErrorHandling::IsEnabled());
-    sq_pop( m_vm, 2 );
+    sq_call(m_vm, 1, SQFalse, Sqrat::ErrorHandling::IsEnabled());
+    sq_pop(m_vm, 1);
 }
 
 // ----------------------------------------------------------------------//
@@ -179,9 +163,6 @@ void jansq2gui::CSquirrel::BindAll()
 {
     Sqrat::Class<jansq2gui::Api> api(m_vm, "api");
 
-    api.Func(_SC("Init"),    &jansq2gui::Api::jansq2gui__Init);
-    api.Func(_SC("Term"),    &jansq2gui::Api::jansq2gui__Term);
-
     BindImGui(api);
     BindZpl(api);
     BindEnet(api);
@@ -190,6 +171,8 @@ void jansq2gui::CSquirrel::BindAll()
     BindJson(api);
 
     m_rootTable->SetInstance(_SC("jansq2gui"), &jansq2guiApi);
+
+    m_rootTable->Func(_SC("jansq2gui__Api_Init"), &jansq2gui::Api::jansq2gui__Api_Init);
 }
 
 // ----------------------------------------------------------------------//

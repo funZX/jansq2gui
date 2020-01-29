@@ -27,19 +27,12 @@
 
 jansq2gui::Api jansq2guiApi;
 
-bool jansq2gui::Api::jansq2gui__Init(zpl_string title, u32 width, u32 height, Sqrat::Function func)
+void jansq2gui::Api::jansq2gui__Api_Init(zpl_string title, u32 width, u32 height, Sqrat::Function func)
 {
-    Title   = title;
-    Width   = width;
-    Height  = height;
-    Ok      = true;
+    jansq2guiApi.Title   = title;
+    jansq2guiApi.Width   = width;
+    jansq2guiApi.Height  = height;
+    jansq2guiApi.Ok      = true;
 
-    auto ret = func.Evaluate<bool>(Title, Width, Height);
-    return ret.Get();
-}
-
-bool jansq2gui::Api::jansq2gui__Term(Sqrat::Function func)
-{
-    auto ret = func.Evaluate<bool>();
-    return ret.Get();
+    jansq2guiApi.RunFunc = func.GetFunc();
 }

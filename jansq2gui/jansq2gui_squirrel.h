@@ -63,8 +63,7 @@ public:
     void							SetPrintFunc(SQPRINTFUNCTION printFunc, SQPRINTFUNCTION errFunc);
     void							SetErrorHandler(SQFUNCTION runErr, SQCOMPILERERROR comErr);
 
-    void                            ExecVoidFunc( const SQChar* func );
-    void                            ExecVoidFunc( const SQChar* slot, const SQChar* func);
+    void                            ExecMainFunc( HSQOBJECT& func );
     K_ERROR							Exec( CScript* script );
 
     void							DebugOn();

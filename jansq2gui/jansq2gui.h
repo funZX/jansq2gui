@@ -95,7 +95,7 @@ namespace jansq2gui
     class Api
     {
     public:
-        Api(): Width(640), Height(480), Title("jansq2gui"), Ok(false) {};
+        Api(): Width(640), Height(480), Title("jansq2gui"), Ok(false), VM(0) {};
 
     public:
         u32         Width;
@@ -103,10 +103,11 @@ namespace jansq2gui
         zpl_string  Title;
         bool        Ok;
 
+        HSQOBJECT   RunFunc;
+        HSQUIRRELVM VM;
     public:
 
-        bool        jansq2gui__Init(zpl_string Title, u32 Width, u32 Height, Sqrat::Function func);
-        bool        jansq2gui__Term(Sqrat::Function func);
+        static void jansq2gui__Api_Init(zpl_string Title, u32 Width, u32 Height, Sqrat::Function func);
 
         bool        jansq2gui__ImGui__ShowDemoWindow();
         bool        jansq2gui__ImGui__ShowAboutWindow();
