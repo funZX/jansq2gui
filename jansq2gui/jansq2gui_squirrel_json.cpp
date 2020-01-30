@@ -32,9 +32,12 @@ bool jansq2gui__Json_False()
     return false;
 }
 
-void jansq2gui::CSquirrel::BindJson(Sqrat::Class<jansq2gui::Api>& api)
+void jansq2gui::CSquirrel::BindJson()
 {
-    api.StaticFunc(_SC("json_false"), &jansq2gui__Json_False);
+    Sqrat::Table table(m_vm);
+    m_rootTable->Bind(_SC("json"), table);
+
+    table.Func(_SC("false"), &jansq2gui__Json_False);
 }
 
 // ----------------------------------------------------------------------//

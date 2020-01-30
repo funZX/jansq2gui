@@ -152,20 +152,13 @@ jansq2gui::CSquirrel::K_ERROR jansq2gui::CSquirrel::Exec( jansq2gui::CScript* sc
 
 void jansq2gui::CSquirrel::BindAll()
 {
-    Sqrat::Class<jansq2gui::Api> api(m_vm, "api");
-
-    api.ConstVar(_SC("WorkDir"), &jansq2gui::Api::WorkDir);
-
-    BindImGui(api);
-    BindZpl(api);
-    BindEnet(api);
-    BindLibrg(api);
-    BindSqlite(api);
-    BindJson(api);
-
-    m_rootTable->SetInstance(_SC("jansq2gui"), &jansq2guiApi);
-    m_rootTable->Func(_SC("jansq2gui__Api_Init"), &jansq2gui::Api::jansq2gui__Api_Init);
-    m_rootTable->Func(_SC("jansq2gui__Run"), &jansq2gui::Api::jansq2gui__Run);
+    BindJansq2gui();
+    BindImGui();
+    BindZpl();
+    BindEnet();
+    BindLibrg();
+    BindSqlite();
+    BindJson();
 }
 
 // ----------------------------------------------------------------------//

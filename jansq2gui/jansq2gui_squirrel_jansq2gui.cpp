@@ -27,17 +27,18 @@
 
 // ----------------------------------------------------------------------//
 
-bool jansq2gui__Enet_False()
+void jansq2gui::CSquirrel::BindJansq2gui()
 {
-    return false;
-}
+    Sqrat::Class<jansq2gui::Api> api(m_vm, "api");
 
-void jansq2gui::CSquirrel::BindEnet()
-{
-    Sqrat::Table table(m_vm);
-    m_rootTable->Bind(_SC("enet"), table);
+    api.ConstVar(_SC("Width"), &jansq2gui::Api::Width);
+    api.ConstVar(_SC("Height"), &jansq2gui::Api::Height);
+    api.ConstVar(_SC("Title"), &jansq2gui::Api::Title);
+    api.ConstVar(_SC("WorkDir"), &jansq2gui::Api::WorkDir);
 
-    table.Func(_SC("false"), &jansq2gui__Enet_False);
+    m_rootTable->SetInstance(_SC("jansq2gui"), &jansq2guiApi);
+    m_rootTable->Func(_SC("jansq2gui__Api_Init"), &jansq2gui::Api::jansq2gui__Api_Init);
+    m_rootTable->Func(_SC("jansq2gui__Run"), &jansq2gui::Api::jansq2gui__Run);
 }
 
 // ----------------------------------------------------------------------//

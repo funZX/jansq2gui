@@ -69,12 +69,13 @@ public:
 protected:
 
 	// ------------------------------------------------------------------//
-    void		                    BindImGui(Sqrat::Class<jansq2gui::Api>& api);
-    void		                    BindZpl(Sqrat::Class<jansq2gui::Api>& api);
-    void		                    BindEnet(Sqrat::Class<jansq2gui::Api>& api);
-    void		                    BindLibrg(Sqrat::Class<jansq2gui::Api>& api);
-    void		                    BindSqlite(Sqrat::Class<jansq2gui::Api>& api);
-    void		                    BindJson(Sqrat::Class<jansq2gui::Api>& api);
+    void		                    BindJansq2gui();
+    void		                    BindImGui();
+    void		                    BindZpl();
+    void		                    BindEnet();
+    void		                    BindLibrg();
+    void		                    BindSqlite();
+    void		                    BindJson();
 
 	void							BindAll();
 	// ------------------------------------------------------------------//

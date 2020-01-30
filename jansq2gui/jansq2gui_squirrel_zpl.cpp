@@ -27,9 +27,12 @@
 
 // ----------------------------------------------------------------------//
 
-void jansq2gui::CSquirrel::BindZpl(Sqrat::Class<jansq2gui::Api>& api)
+void jansq2gui::CSquirrel::BindZpl()
 {
-    api.StaticFunc(_SC("zpl_sin"), &zpl_sin);
+    Sqrat::Table table(m_vm);
+    m_rootTable->Bind(_SC("zpl"), table);
+
+    table.Func(_SC("sin"), &zpl_sin);
 }
 
 // ----------------------------------------------------------------------//

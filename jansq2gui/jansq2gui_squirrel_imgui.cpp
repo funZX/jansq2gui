@@ -48,83 +48,37 @@ bool jansq2gui::Api::jansq2gui__ImGui__ShowMetricsWindow()
     return ret;
 }
 
-void jansq2gui::Api::jansq2gui__ImGui__Begin1(const char* name)
-{
-    ImGui::Begin(name, 0, 0);
-}
-
-void jansq2gui::Api::jansq2gui__ImGui__Begin2(const char* name, bool* p_open)
-{
-    ImGui::Begin(name, p_open, 0);
-}
-
-void jansq2gui::Api::jansq2gui__ImGui__Begin3(const char* name, bool* p_open, ImGuiWindowFlags flags)
+void jansq2gui::Api::jansq2gui__ImGui__Begin(const char* name, bool* p_open, ImGuiWindowFlags flags)
 {
     ImGui::Begin(name, p_open, flags);
 }
 
-bool jansq2gui::Api::jansq2gui__ImGui__BeginChild11(const char* str_id)
-{
-    return ImGui::BeginChild(str_id, ImVec2(0, 0), false, 0);
-}
-
-bool jansq2gui::Api::jansq2gui__ImGui__BeginChild12(const char* str_id, const ImVec2& size)
-{
-    return ImGui::BeginChild(str_id, size, false, 0);
-}
-
-bool jansq2gui::Api::jansq2gui__ImGui__BeginChild13(const char* str_id, const ImVec2& size, bool border)
-{
-    return ImGui::BeginChild(str_id, size, border, 0);
-}
-
-bool jansq2gui::Api::jansq2gui__ImGui__BeginChild14(const char* str_id, const ImVec2& size, bool border, ImGuiWindowFlags flags)
+bool jansq2gui::Api::jansq2gui__ImGui__BeginChild(const char* str_id, const ImVec2& size, bool border, ImGuiWindowFlags flags)
 {
     return ImGui::BeginChild(str_id, size, border, flags);
 }
 
-bool jansq2gui::Api::jansq2gui__ImGui__BeginChild21(ImGuiID id)
-{
-    return ImGui::BeginChild(id, ImVec2(0, 0), false, 0);
-}
-
-bool jansq2gui::Api::jansq2gui__ImGui__BeginChild22(ImGuiID id, const ImVec2& size)
-{
-    return ImGui::BeginChild(id, size, false, 0);
-}
-
-bool jansq2gui::Api::jansq2gui__ImGui__BeginChild23(ImGuiID id, const ImVec2& size, bool border)
-{
-    return ImGui::BeginChild(id, size, border, 0);
-}
-
-bool jansq2gui::Api::jansq2gui__ImGui__BeginChild24(ImGuiID id, const ImVec2& size, bool border, ImGuiWindowFlags flags)
+bool jansq2gui::Api::jansq2gui__ImGui__BeginChildId(ImGuiID id, const ImVec2& size, bool border, ImGuiWindowFlags flags)
 {
     return ImGui::BeginChild(id, size, border, flags);
 }
 
-void jansq2gui::CSquirrel::BindImGui(Sqrat::Class<jansq2gui::Api>& api )
+void jansq2gui::CSquirrel::BindImGui()
 {
-    api.StaticFunc(_SC("imgui_get_version"),       &ImGui::GetVersion);
+    Sqrat::Table table(m_vm);
+    m_rootTable->Bind(_SC("imgui"), table);
 
-    api.Func(_SC("imgui_show_demo_window"),        &jansq2gui::Api::jansq2gui__ImGui__ShowDemoWindow);
-    api.Func(_SC("imgui_show_about_window"),       &jansq2gui::Api::jansq2gui__ImGui__ShowAboutWindow);
-    api.Func(_SC("imgui_show_metrics_window"),     &jansq2gui::Api::jansq2gui__ImGui__ShowMetricsWindow);
+    table.Func(_SC("get_version"),             &ImGui::GetVersion);
 
-    api.Overload(_SC("imgui_begin"),               &jansq2gui::Api::jansq2gui__ImGui__Begin1);
-    api.Overload(_SC("imgui_begin"),               &jansq2gui::Api::jansq2gui__ImGui__Begin2);
-    api.Overload(_SC("imgui_begin"),               &jansq2gui::Api::jansq2gui__ImGui__Begin3);
-    api.StaticFunc(_SC("imgui_end"),               &ImGui::End);
+    table.Func(_SC("show_demo_window"),        &jansq2gui::Api::jansq2gui__ImGui__ShowDemoWindow);
+    table.Func(_SC("show_about_window"),       &jansq2gui::Api::jansq2gui__ImGui__ShowAboutWindow);
+    table.Func(_SC("show_metrics_window"),     &jansq2gui::Api::jansq2gui__ImGui__ShowMetricsWindow);
 
-    api.Overload(_SC("imgui_begin_child"),         &jansq2gui::Api::jansq2gui__ImGui__BeginChild11);
-    api.Overload(_SC("imgui_begin_child"),         &jansq2gui::Api::jansq2gui__ImGui__BeginChild12);
-    api.Overload(_SC("imgui_begin_child"),         &jansq2gui::Api::jansq2gui__ImGui__BeginChild13);
-    api.Overload(_SC("imgui_begin_child"),         &jansq2gui::Api::jansq2gui__ImGui__BeginChild14);
-    api.Overload(_SC("imgui_begin_child_id"),      &jansq2gui::Api::jansq2gui__ImGui__BeginChild21);
-    api.Overload(_SC("imgui_begin_child_id"),      &jansq2gui::Api::jansq2gui__ImGui__BeginChild22);
-    api.Overload(_SC("imgui_begin_child_id"),      &jansq2gui::Api::jansq2gui__ImGui__BeginChild23);
-    api.Overload(_SC("imgui_begin_child_id"),      &jansq2gui::Api::jansq2gui__ImGui__BeginChild24);
+    table.Func(_SC("begin"),                   &jansq2gui::Api::jansq2gui__ImGui__Begin);
+    table.Func(_SC("end"),                     &ImGui::End);
 
-    api.StaticFunc(_SC("imgui_end_child"),         &ImGui::EndChild);
+    table.Func(_SC("begin_child"),             &jansq2gui::Api::jansq2gui__ImGui__BeginChild);
+    table.Func(_SC("begin_child_id"),          &jansq2gui::Api::jansq2gui__ImGui__BeginChildId);
+    table.Func(_SC("end_child"),               &ImGui::EndChild);
 }
 // ----------------------------------------------------------------------//
