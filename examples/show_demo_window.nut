@@ -12,15 +12,13 @@ function Run()
 	}
 	
 	jansq2gui.imgui_end();
-	
-	#util.Print("import util; util.Print");
 }
 
 function Init()
 {
-	print(format("%s%s", jansq2gui.WorkDir, "util"))
-	#import(format("%s%s", jansq2gui.WorkDir, "util"));
-
+	import("util");
+	
+	util.Print();
 
 	jansq2gui__Run(::Run);
 }

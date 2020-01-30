@@ -1,9 +1,6 @@
 util <- {
 	function Print()
 	{
-		print("False");
+		print("util loaded!!!");
 	}
 }
-
-print("aaaaaaaaaaaaa")
-	

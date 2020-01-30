@@ -58,23 +58,22 @@ int main(int argc, char** argv)
     static char work_dir[256];
     char* full_name = zpl_path_get_full_name(zpl_heap(), filename);
     const char* file_base_name = zpl_path_base_name(full_name);
-    
-    jansq2gui_memcpy(work_dir, full_name, file_base_name - full_name);
-    work_dir[file_base_name - full_name] = 0;
+    int file_full_path_size = file_base_name - full_name;
+
+    jansq2gui_memcpy(work_dir, full_name, file_full_path_size);
+    work_dir[file_full_path_size] = 0;
 
     zpl_free(zpl_heap(), full_name);
 
     jansq2guiApi.WorkDir = work_dir;
     jansq2guiApi.VM = vm.GetSQVM();
+    sqrat_importlib_library_path = jansq2guiApi.WorkDir;
 
     vm.DebugOn();
     nut.Run();
 
     if (OT_CLOSURE != jansq2guiApi.RunFunc._type)
-    {
-        jansq2gui_echo("Done!");
         return 0;
-    }
 
     ImImpl_InitParams ini;
     ini.gWindowSize.x = jansq2guiApi.Width;
