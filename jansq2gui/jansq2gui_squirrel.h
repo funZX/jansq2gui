@@ -56,10 +56,6 @@ public:
 	template<class V>
 	void							AddConstSlot(const SQChar* name, V* val);
 
-
-    Sqrat::string					GetLastErrorMsg() { return m_lastErrorMsg; }
-    void							SetLastErrorMsg(const Sqrat::string& str) { m_lastErrorMsg = str; }
-
     void							SetPrintFunc(SQPRINTFUNCTION printFunc, SQPRINTFUNCTION errFunc);
     void							SetErrorHandler(SQFUNCTION runErr, SQCOMPILERERROR comErr);
 
@@ -97,7 +93,6 @@ protected:
     HSQUIRRELVM						m_vm;
     Sqrat::RootTable*				m_rootTable;
 	Sqrat::ConstTable*				m_constTable;
-    static Sqrat::string			m_lastErrorMsg;
 
 	HSQREMOTEDBG					m_rdbg;
     bool                            m_rdbg_shutdown;

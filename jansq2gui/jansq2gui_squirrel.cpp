@@ -28,8 +28,6 @@
 
 // ----------------------------------------------------------------------//
 
-Sqrat::string jansq2gui::CSquirrel::m_lastErrorMsg;
-
 jansq2gui::CSquirrel::CSquirrel()
     : m_vm( sq_open( 1024 ) )
     , m_rootTable( jansq2gui_new Sqrat::RootTable( m_vm ) )
@@ -90,18 +88,13 @@ SQInteger jansq2gui::CSquirrel::RuntimeErrorHandler( HSQUIRRELVM v )
     const SQChar *sErr = 0;
     if( sq_gettop(v) >= 1 )
     {
-        Sqrat::string& errStr = m_lastErrorMsg;
-
         if( SQ_SUCCEEDED( sq_getstring( v, 2, &sErr ) ) )
         {
-            //scprintf(_SC("RuntimeError: %s\n"), sErr);
-            //errStr = _SC("RuntimeError: ") + sErr;
-            errStr = sErr;
+            jansq2gui_error(_SC("RuntimeError: %s\n"), sErr);
         }
         else
         {
-            //scprintf(_SC("An Unknown RuntimeError Occured.\n"));
-            errStr = _SC( "An Unknown RuntimeError Occured." );
+            jansq2gui_error(_SC("An Unknown RuntimeError Occured.\n"));
         }
     }
     return 0;
@@ -115,11 +108,8 @@ void jansq2gui::CSquirrel::CompilerErrorHandler( HSQUIRRELVM v,
     SQInteger line,
     SQInteger column )
 {
-    //scprintf(_SC("%s(%d:%d): %s\n"), source, line, column, desc);
 
-    SQChar buf[ 512 ];
-    jansq2gui_error( buf, _SC("%s(%d:%d): %s"), source, line, column, desc );
-    m_lastErrorMsg = buf;
+    jansq2gui_error(_SC("%s(%d:%d): %s"), source, line, column, desc );
 }
 
 // ----------------------------------------------------------------------//

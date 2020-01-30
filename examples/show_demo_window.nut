@@ -1,3 +1,6 @@
+import("test1");
+import("test2");
+
 function Run()
 {
 	jansq2gui.imgui_show_demo_window();
@@ -16,9 +19,12 @@ function Run()
 
 function Init()
 {
-	import("util");
+	test1.Print();
+	test2.Print();
 	
-	util.Print();
+	instance <- MyClass(20, "Aaa");
+	::print(instance.a); // Will print "1"
+	::print(instance.b); // Will print "Hello"
 
 	jansq2gui__Run(::Run);
 }
