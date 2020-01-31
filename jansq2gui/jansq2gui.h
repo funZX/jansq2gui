@@ -110,13 +110,32 @@ namespace jansq2gui
         static void         jansq2gui__Api_Init(zpl_string Title, u32 Width, u32 Height, Sqrat::Function func);
         static void         jansq2gui__Run(Sqrat::Function func);
 
-        static bool         jansq2gui__ImGui__ShowDemoWindow();
-        static bool         jansq2gui__ImGui__ShowAboutWindow();
-        static bool         jansq2gui__ImGui__ShowMetricsWindow();
+        struct jansq2gui__ImGui_Status
+        {
+        public:
+            bool show;
+            bool open;
 
-        static void         jansq2gui__ImGui__Begin(const char* name, bool* p_open, ImGuiWindowFlags flags);
-        static bool         jansq2gui__ImGui__BeginChild(const char* str_id, const ImVec2& size, bool border, ImGuiWindowFlags flags);
-        static bool         jansq2gui__ImGui__BeginChildId(ImGuiID id, const ImVec2& size, bool border, ImGuiWindowFlags flags);
+            jansq2gui__ImGui_Status() { show = false; open = true; }
+        };
+
+        static jansq2gui__ImGui_Status      jansq2gui__ImGui__ShowDemoWindow();
+        static jansq2gui__ImGui_Status      jansq2gui__ImGui__ShowDemoWindow(bool);
+
+        static jansq2gui__ImGui_Status      jansq2gui__ImGui__Begin1(const char* name);
+        static jansq2gui__ImGui_Status      jansq2gui__ImGui__Begin2(const char* name, ImGuiWindowFlags flags);
+        static jansq2gui__ImGui_Status      jansq2gui__ImGui__Begin3(const char* name, ImGuiWindowFlags flags, bool p_open);
+
+        static bool                         jansq2gui__ImGui__BeginChild1(const char* str_id);
+        static bool                         jansq2gui__ImGui__BeginChild2(const char* str_id, const ImVec2& size);
+        static bool                         jansq2gui__ImGui__BeginChild3(const char* str_id, const ImVec2& size, bool border);
+        static bool                         jansq2gui__ImGui__BeginChild4(const char* str_id, const ImVec2& size, bool border, ImGuiWindowFlags flags);
+
+        static bool                         jansq2gui__ImGui__BeginChildId1(ImGuiID id);
+        static bool                         jansq2gui__ImGui__BeginChildId2(ImGuiID id, const ImVec2& size);
+        static bool                         jansq2gui__ImGui__BeginChildId3(ImGuiID id, const ImVec2& size, bool border);
+        static bool                         jansq2gui__ImGui__BeginChildId4(ImGuiID id, const ImVec2& size, bool border, ImGuiWindowFlags flags);
+
     };
 };
 

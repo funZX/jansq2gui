@@ -1,12 +1,24 @@
+demo <- imgui.status();
+
 function Run()
 {
-	imgui.show_demo_window();
-	imgui.show_about_window();
-	imgui.show_metrics_window();
+	local r = imgui.status();
+
+	r = imgui.begin("A");
+	if (r.show)
+	{
+		imgui.end();
+	}
+	
+	if (demo.open)
+	{
+		demo = imgui.show_demo_window(true);
+	}
 }
 
 function Init()
 {
+
 	jansq2gui__Run(::Run);
 }
 
