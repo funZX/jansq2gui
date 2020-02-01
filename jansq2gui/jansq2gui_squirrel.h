@@ -62,7 +62,7 @@ public:
     void                            ExecMainFunc( HSQOBJECT& func );
     K_ERROR							Exec( CScript* script );
 
-    void							DebugOn();
+    void							DebugOn(unsigned short port);
     void							DebugOff();
 
 	// ------------------------------------------------------------------//

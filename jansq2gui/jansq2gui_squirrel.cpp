@@ -163,12 +163,13 @@ void jansq2gui::CSquirrel::BindAll()
 
 // ----------------------------------------------------------------------//
 
-void jansq2gui::CSquirrel::DebugOn()
+void jansq2gui::CSquirrel::DebugOn(unsigned short port)
 {
     if (m_rdbg)
         return;
 
-    m_rdbg = sq_rdbg_init(m_vm, 20900, SQTrue);
+    m_rdbg = sq_rdbg_init(m_vm, port, SQTrue);
+
     jansq2gui_assert(m_rdbg, "Debugger failed to start!");
 
     sq_enabledebuginfo(m_vm, SQTrue);
@@ -186,7 +187,7 @@ void jansq2gui::CSquirrel::DebugOn()
 
         m_rdbg = nullptr;
         if (!m_rdbg_shutdown)
-            DebugOn();
+            DebugOn(port);
      });
 }
 

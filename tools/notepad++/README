@@ -5,3 +5,4 @@ Notepad++:
 -  activate with `Language -> Squirrel`
 - `Settings -> Preferences -> Auto-Completion` -> "Enable auto-completion on each input", "Function completion" and "Function parameters hint on input"
 - Run jansq2gui.exe "$(FULL_CURRENT_PATH)"
+- Install NppExec plugin

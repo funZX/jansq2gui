@@ -32,17 +32,57 @@
 static jansq2gui::CSquirrel    vm;
 static jansq2gui::CScript      nut(&vm);
 
+struct Options
+{
+public:
+    zpl_opts o;
+
+    Options(char* name) { zpl_opts_init(&o, zpl_heap(), name); }
+    ~Options() { zpl_opts_free(&o); }
+};
+
+struct Console
+{
+public:
+    Console() { open_console(); }
+    ~Console() { close_console();  }
+};
+
+struct Debugger
+{
+public:
+    jansq2gui::CSquirrel* vm;
+
+    Debugger() { vm = 0; }
+    Debugger(jansq2gui::CSquirrel* v, unsigned short port) : vm(v) { if (vm) vm->DebugOn(port); }
+    ~Debugger() { if (vm) vm->DebugOff(); }
+};
+
 // ----------------------------------------------------------------------//
 
 int main(int argc, char** argv)
 {
-    if (argc != 2)
+    Console console;
+    Options options(argv[0]);
+
+    zpl_opts_add(&options.o, "d", "debug",     "Start with debugger.", ZPL_OPTS_FLAG);
+    zpl_opts_add(&options.o, "p", "debugport", "Debugger port", ZPL_OPTS_INT);
+    zpl_opts_add(&options.o, "e", "exec",   "Path to script.", ZPL_OPTS_STRING);
+    zpl_opts_add(&options.o, "a", "args", "Command line arguments for script", ZPL_OPTS_STRING);
+
+    if (!zpl_opts_compile(&options.o, argc, argv) || !zpl_opts_has_arg(&options.o, "exec"))
     {
-        jansq2gui_error( "Usage: jansq2gui file.nut" );
-        return 1;
+        zpl_opts_print_errors(&options.o);
+        zpl_opts_print_help(&options.o);
+        return 0;
     }
-   
-    const char* filename = argv[1];
+
+    const char* filename    = zpl_opts_string(&options.o, "exec", "");
+    bool debugOn            = zpl_opts_has_arg(&options.o, "debug");
+    int debugPort           = zpl_opts_integer(&options.o, "debugport", 20900);
+    
+    jansq2gui::CSquirrel* debugVm = (debugOn && (debugPort > 0 && debugPort < USHRT_MAX)) ? &vm : 0;
+    Debugger debugger       = Debugger(debugVm, debugPort);
 
     if (!zpl_fs_exists(filename))
     {
@@ -70,14 +110,10 @@ int main(int argc, char** argv)
     jansq2guiApi.VM = vm.GetSQVM();
     sqrat_importlib_library_path = jansq2guiApi.WorkDir;
 
-    open_console();
-
-    vm.DebugOn();
     nut.Run();
 
     if (OT_CLOSURE != jansq2guiApi.RunFunc._type)
     {
-        close_console();
         vm.DebugOff();
         return 0;
     }
@@ -95,7 +131,6 @@ int main(int argc, char** argv)
         16);
 
     ImImpl_Main(&ini, argc, argv);
-
     return 0;
 }
 
@@ -107,6 +142,7 @@ void DrawGL()
     ImImpl_ClearColorBuffer(clearColor);
 
     vm.ExecMainFunc(jansq2guiApi.RunFunc);
+    fflush(0);
 }
 
 // ----------------------------------------------------------------------//
@@ -122,5 +158,4 @@ void ResizeGL(int w, int h)
 
 void DestroyGL()
 {
-    vm.DebugOff();
 }
