@@ -1,4 +1,4 @@
-demo <- imgui.status();
+#! /usr/bin/jansq2gui
 
 function Run()
 {
