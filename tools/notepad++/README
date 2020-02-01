@@ -1,0 +1,7 @@
+copy `squirrel.xml` to `C:\Program Files\Notepad++\plugins\APIs`
+copy `userDefinedLang.xml` to `C:\Users\%USER%\AppData\Roaming\Notepad++`
+
+Notepad++:
+-  activate with `Language -> Squirrel`
+- `Settings -> Preferences -> Auto-Completion` -> "Enable auto-completion on each input", "Function completion" and "Function parameters hint on input"
+- Run jansq2gui.exe "$(FULL_CURRENT_PATH)"

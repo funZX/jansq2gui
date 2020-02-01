@@ -107,7 +107,8 @@ namespace jansq2gui
         HSQUIRRELVM VM;
     public:
 
-        static void         jansq2gui__Api_Init(zpl_string Title, u32 Width, u32 Height, Sqrat::Function func);
+        static void         jansq2gui__Api_Init1(zpl_string Title, Sqrat::Function func);
+        static void         jansq2gui__Api_Init2(zpl_string Title, Sqrat::Function func, u32 Width, u32 Height);
         static void         jansq2gui__Run(Sqrat::Function func);
 
         struct jansq2gui__ImGui_Status

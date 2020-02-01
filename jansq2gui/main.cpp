@@ -75,10 +75,17 @@ int main(int argc, char** argv)
     if (OT_CLOSURE != jansq2guiApi.RunFunc._type)
         return 0;
 
-    ImImpl_InitParams ini;
-    ini.gWindowSize.x = jansq2guiApi.Width;
-    ini.gWindowSize.y = jansq2guiApi.Height;
-    jansq2gui_memcpy(ini.gWindowTitle, jansq2guiApi.Title, zpl_strlen(jansq2guiApi.Title) + 1);
+    const unsigned char ttf_font[] = 
+#                                   include "ttf_font.inl"
+        ;
+
+    ImImpl_InitParams ini(
+        jansq2guiApi.Width,
+        jansq2guiApi.Height,
+        jansq2guiApi.Title,
+        0,
+        (const unsigned char*)ttf_font, sizeof(ttf_font) / sizeof(ttf_font[0]),
+        16);
 
     ImImpl_Main(&ini, argc, argv);
 
@@ -97,14 +104,14 @@ void DrawGL()
 
 // ----------------------------------------------------------------------//
 
-
-
 void InitGL()
 {
 }
+
 void ResizeGL(int w, int h)
 {
 }
+
 void DestroyGL()
 {
 }

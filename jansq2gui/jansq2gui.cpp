@@ -27,7 +27,26 @@
 
 jansq2gui::Api jansq2guiApi;
 
-void jansq2gui::Api::jansq2gui__Api_Init(zpl_string title, u32 width, u32 height, Sqrat::Function func)
+void jansq2gui::Api::jansq2gui__Api_Init1(zpl_string title, Sqrat::Function func)
+{
+    glfwInit();
+    
+    GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+    
+    if (monitor)
+    {
+        const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+
+        jansq2guiApi.Width = (mode->width * 3) / 4;
+        jansq2guiApi.Height = (mode->height * 3) / 4;
+    }
+
+    jansq2guiApi.Title  = title;
+
+    func.Execute();
+}
+
+void jansq2gui::Api::jansq2gui__Api_Init2(zpl_string title, Sqrat::Function func, u32 width, u32 height)
 {
     jansq2guiApi.Title   = title;
     jansq2guiApi.Width   = width;

@@ -37,7 +37,8 @@ void jansq2gui::CSquirrel::BindJansq2gui()
     api.ConstVar(_SC("WorkDir"), &jansq2gui::Api::WorkDir);
 
     m_rootTable->SetInstance(_SC("jansq2gui"), &jansq2guiApi);
-    m_rootTable->Func(_SC("jansq2gui__Api_Init"), &jansq2gui::Api::jansq2gui__Api_Init);
+    m_rootTable->Overload(_SC("jansq2gui__Api_Init"), &jansq2gui::Api::jansq2gui__Api_Init1);
+    m_rootTable->Overload(_SC("jansq2gui__Api_Init"), &jansq2gui::Api::jansq2gui__Api_Init2);
     m_rootTable->Func(_SC("jansq2gui__Run"), &jansq2gui::Api::jansq2gui__Run);
 }
 
