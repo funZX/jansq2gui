@@ -153,12 +153,12 @@ jansq2gui::CSquirrel::K_ERROR jansq2gui::CSquirrel::Exec( jansq2gui::CScript* sc
 void jansq2gui::CSquirrel::BindAll()
 {
     BindJansq2gui();
-    BindImGui();
     BindZpl();
     BindEnet();
     BindLibrg();
     BindSqlite();
     BindJson();
+    BindImGui();
 }
 
 // ----------------------------------------------------------------------//
@@ -197,6 +197,8 @@ void jansq2gui::CSquirrel::DebugOff()
 		sq_rdbg_term(m_rdbg);
 		sq_enabledebuginfo(m_vm, SQFalse);
 	}
+
+    m_rdbg_shutdown = true;
 }
 
 // ----------------------------------------------------------------------//

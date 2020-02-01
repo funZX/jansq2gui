@@ -11,13 +11,13 @@ function Run()
 		{
 			
 		}
-		imgui.end_child()
+		imgui.end_child();
 		
 		if (imgui.begin_child_id(1))
 		{
 			
 		}
-		imgui.end_child()
+		imgui.end_child();
 	}
 	imgui.end();
 }

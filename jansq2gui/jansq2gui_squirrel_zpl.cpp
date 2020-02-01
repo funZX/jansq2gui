@@ -32,6 +32,12 @@ void jansq2gui::CSquirrel::BindZpl()
     Sqrat::Table table(m_vm);
     m_rootTable->Bind(_SC("zpl"), table);
 
+    table.Bind(_SC("string"), Sqrat::Class<jansq2gui::Api::jansq2gui__Zpl_String>(m_vm, _SC("string"))
+        .Ctor()
+        .Ctor<char*>()
+        .Var(_SC("str"), &jansq2gui::Api::jansq2gui__Zpl_String::str)
+    );
+
     table.Func(_SC("sin"), &zpl_sin);
 }
 

@@ -1,4 +1,4 @@
-copy `squirrel.xml` to `C:\Program Files\Notepad++\plugins\APIs`
+copy `squirrel.xml` to `C:\Program Files\Notepad++\autoCompletion` 
 copy `userDefinedLang.xml` to `C:\Users\%USER%\AppData\Roaming\Notepad++`
 
 Notepad++:

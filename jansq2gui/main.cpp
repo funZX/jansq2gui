@@ -23,6 +23,7 @@
 *    SOFTWARE.
 */
 #include <fstream>
+#include <console.h>
 
 #include <jansq2gui.h>
 #include <jansq2gui_script.h>
@@ -37,7 +38,7 @@ int main(int argc, char** argv)
 {
     if (argc != 2)
     {
-        jansq2gui_error( "Usage: jansq2gui file.nut [width height]" );
+        jansq2gui_error( "Usage: jansq2gui file.nut" );
         return 1;
     }
    
@@ -69,11 +70,17 @@ int main(int argc, char** argv)
     jansq2guiApi.VM = vm.GetSQVM();
     sqrat_importlib_library_path = jansq2guiApi.WorkDir;
 
+    open_console();
+
     vm.DebugOn();
     nut.Run();
 
     if (OT_CLOSURE != jansq2guiApi.RunFunc._type)
+    {
+        close_console();
+        vm.DebugOff();
         return 0;
+    }
 
     const unsigned char ttf_font[] = 
 #                                   include "ttf_font.inl"
@@ -106,6 +113,7 @@ void DrawGL()
 
 void InitGL()
 {
+
 }
 
 void ResizeGL(int w, int h)
@@ -114,4 +122,5 @@ void ResizeGL(int w, int h)
 
 void DestroyGL()
 {
+    vm.DebugOff();
 }

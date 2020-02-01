@@ -86,7 +86,7 @@ solution "jansq2gui"
 -----------------------------------------------------------------
 	
 project ("jansq2gui")
-	kind "ConsoleApp"	
+	kind "WindowedApp"	
 	
 	includedirs { 
 		path.join(prjDir, "../jansq2gui"),
@@ -118,7 +118,9 @@ project ("jansq2gui")
 		path.join(prjDir, "../3rdparty/zpl-c/librg/include"),
 
 		path.join(prjDir, "../3rdparty/glfw/include"),
-		path.join(prjDir, "../3rdparty/glfw/deps"),		
+		path.join(prjDir, "../3rdparty/glfw/deps"),	
+
+		path.join(prjDir, "../3rdparty/helper"),
 	}
 
 	files {
@@ -167,6 +169,8 @@ project ("3rdparty")
 
 		path.join(localDir, "glfw/include"),
 		path.join(localDir, "glfw/deps"),
+		
+		path.join(localDir, "helper"),
 	}
 
 	files {
@@ -245,6 +249,9 @@ project ("3rdparty")
 		path.join(localDir, "glfw/deps/**.c"),
 		path.join(localDir, "glfw/deps/glad/**.h"),
 		path.join(localDir, "glfw/deps/glad/**.c"),
+		
+		path.join(localDir, "helper/**.h"),
+		path.join(localDir, "helper/**.cpp"),
 	}
 	
 	excludes {
