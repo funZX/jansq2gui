@@ -74,7 +74,7 @@ solution "jansq2gui"
 
 	configuration { "not vs*" }
 		defines {
-			"LINUX",
+			"__linux__",
 			"_GLFW_X11",
 		}
 		links {

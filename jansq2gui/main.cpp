@@ -44,8 +44,8 @@ public:
 struct Console
 {
 public:
-    Console() { open_console(); }
-    ~Console() { close_console();  }
+    Console()   { open_console(); }
+    ~Console()  { close_console(); }
 };
 
 struct Debugger
@@ -53,7 +53,6 @@ struct Debugger
 public:
     jansq2gui::CSquirrel* vm;
 
-    Debugger() { vm = 0; }
     Debugger(jansq2gui::CSquirrel* v, unsigned short port) : vm(v) { if (vm) vm->DebugOn(port); }
     ~Debugger() { if (vm) vm->DebugOff(); }
 };
@@ -113,10 +112,7 @@ int main(int argc, char** argv)
     nut.Run();
 
     if (OT_CLOSURE != jansq2guiApi.RunFunc._type)
-    {
-        vm.DebugOff();
         return 0;
-    }
 
     const unsigned char ttf_font[] = 
 #                                   include "ttf_font.inl"

@@ -64,7 +64,7 @@ jansq2gui::CSquirrel::~CSquirrel()
     if (m_rdbg)
         DebugOff();
     while (m_rdbg)
-        zpl_sleep_ms(10);
+        zpl_sleep_ms(50);
 
 	jansq2gui_delete( m_constTable );
     delete( m_rootTable );
