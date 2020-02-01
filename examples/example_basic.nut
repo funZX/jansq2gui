@@ -4,7 +4,7 @@ demo <- imgui.status();
 
 function Run()
 {
-	if (demo.open)
+	if (demo.Open)
 	{
 		demo = imgui.show_demo_window(true);
 	}

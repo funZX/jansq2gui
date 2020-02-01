@@ -5,7 +5,7 @@ function Run()
 	local r = imgui.status();
 
 	r = imgui.begin("A");
-	if (r.show)
+	if (r.Show)
 	{
 		if (imgui.begin_child("A.a"))
 		{

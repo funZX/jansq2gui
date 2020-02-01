@@ -150,6 +150,8 @@ void InitGL()
 
 void ResizeGL(int w, int h)
 {
+    jansq2guiApi.Width  = w;
+    jansq2guiApi.Height = h;
 }
 
 void DestroyGL()

@@ -24,6 +24,7 @@
 */
 
 #include <jansq2gui_squirrel.h>
+#include <lib/jansq2gui_rect.h>
 
 // ----------------------------------------------------------------------//
 
@@ -130,9 +131,49 @@ void jansq2gui::CSquirrel::BindImGui()
 
     table.Bind(_SC("status"), Sqrat::Class<jansq2gui::Api::jansq2gui__ImGui_Status>(m_vm, _SC("status"))
         .Ctor()
-        .Var(_SC("show"), &jansq2gui::Api::jansq2gui__ImGui_Status::show)
-        .Var(_SC("open"), &jansq2gui::Api::jansq2gui__ImGui_Status::open)
+        .Var(_SC("Show"), &jansq2gui::Api::jansq2gui__ImGui_Status::show)
+        .Var(_SC("Open"), &jansq2gui::Api::jansq2gui__ImGui_Status::open)
     );
+
+    table.Bind(_SC("rect"), Sqrat::Class<jansq2gui::CRect>(m_vm, _SC("rect"))
+        .Ctor()
+        .Ctor<ImVec2, ImVec2>()
+        .Ctor<float, float, float, float>()
+        .Prop(_SC("Left"), &jansq2gui::CRect::Left)
+        .Prop(_SC("Right"), &jansq2gui::CRect::Right)
+        .Prop(_SC("Top"), &jansq2gui::CRect::Top)
+        .Prop(_SC("Bottom"), &jansq2gui::CRect::Bottom)
+        .Prop(_SC("Width"), &jansq2gui::CRect::Width)
+        .Prop(_SC("Height"), &jansq2gui::CRect::Height)
+        .Prop(_SC("Center"), &jansq2gui::CRect::GetCenter)
+        .Prop(_SC("TopLeft"), &jansq2gui::CRect::TopLeft)
+        .Prop(_SC("TopRight"), &jansq2gui::CRect::TopRight)
+        .Prop(_SC("BottomLeft"), &jansq2gui::CRect::BottomLeft)
+        .Prop(_SC("BottomRight"), &jansq2gui::CRect::BottomRight)
+        .Overload<void(jansq2gui::CRect::*)(ImVec2)>(_SC("move"), &jansq2gui::CRect::Move)
+        .Overload<void(jansq2gui::CRect::*)(float, float)>(_SC("move"), &jansq2gui::CRect::Move)
+        .Overload<void(jansq2gui::CRect::*)(ImVec2)>(_SC("moveto"), &jansq2gui::CRect::MoveTo)
+        .Overload<void(jansq2gui::CRect::*)(float, float)>(_SC("moveto"), &jansq2gui::CRect::MoveTo)
+        .Overload<void(jansq2gui::CRect::*)(ImVec2)>(_SC("inflate"), &jansq2gui::CRect::Inflate)
+        .Overload<void(jansq2gui::CRect::*)(float, float)>(_SC("inflate"), &jansq2gui::CRect::Inflate)
+        .Overload<void(jansq2gui::CRect::*)(ImVec2)>(_SC("zoom"), &jansq2gui::CRect::Zoom)
+        .Overload<void(jansq2gui::CRect::*)(float, float)>(_SC("zoom"), &jansq2gui::CRect::Zoom)
+        .Overload<void(jansq2gui::CRect::*)(ImVec2)>(_SC("resize"), &jansq2gui::CRect::Resize)
+        .Overload<void(jansq2gui::CRect::*)(float, float)>(_SC("resize"), &jansq2gui::CRect::Resize)
+        .Overload<void(jansq2gui::CRect::*)(ImVec2)>(_SC("scale"), &jansq2gui::CRect::Scale)
+        .Overload<void(jansq2gui::CRect::*)(float, float)>(_SC("scale"), &jansq2gui::CRect::Scale)
+        .Overload<void(jansq2gui::CRect::*)(ImVec2)>(_SC("center"), &jansq2gui::CRect::SetCenter)
+        .Overload<void(jansq2gui::CRect::*)(float, float)>(_SC("center"), &jansq2gui::CRect::SetCenter)
+        .Func(_SC("align"), &jansq2gui::CRect::AlignTo)
+        .StaticFunc(_SC("union"), &jansq2gui::CRect::Union)
+        .StaticFunc(_SC("intersect"), &jansq2gui::CRect::Intersect)
+        .Overload<bool(jansq2gui::CRect::*)(ImVec2)>(_SC("is_inside"), &jansq2gui::CRect::IsInside)
+        .Overload<bool(jansq2gui::CRect::*)(float, float)>(_SC("is_inside"), &jansq2gui::CRect::IsInside)
+        .Overload<void(jansq2gui::CRect::*)(jansq2gui::CRect)>(_SC("bound"), &jansq2gui::CRect::Bound)
+        .Overload<void(jansq2gui::CRect::*)(ImVec2, ImVec2)>(_SC("bound"), &jansq2gui::CRect::Bound)
+        .Overload<void(jansq2gui::CRect::*)(float, float, float, float)>(_SC("bound"), &jansq2gui::CRect::Bound)
+    );
+
 
     table.Func(_SC("get_version"),             &ImGui::GetVersion);
 
