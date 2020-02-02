@@ -49,6 +49,8 @@ function toolchain(_buildDir, _libDir)
 			{ "linux-arm-gcc",   "Linux (ARM, GCC compiler)"  },
 			{ "mingw-gcc",       "MinGW"                      },
 			{ "mingw-clang",     "MinGW (clang compiler)"     },
+			{ "cygwin-gcc",      "Cygwin"                      },
+			{ "cygwin-clang",    "Cygwin (clang compiler)"     },			
 		},
 	}
 
@@ -122,6 +124,18 @@ function toolchain(_buildDir, _libDir)
 			premake.gcc.cxx = "clang++"
 			premake.gcc.ar  = "ar"
 			location (path.join(_buildDir, "projects", _ACTION .. "-linux-clang"))
+
+		elseif "cygwin-gcc" == _OPTIONS["gcc"] then
+			premake.gcc.cc  = "gcc"
+			premake.gcc.cxx = "g++"
+			premake.gcc.ar  = "ar"
+			location (path.join(_buildDir, "projects", _ACTION .. "-cygwin"))
+
+		elseif "cygwin-clang" == _OPTIONS["gcc"] then
+			premake.gcc.cc  = "clang"
+			premake.gcc.cxx = "clang++"
+			premake.gcc.ar  = "ar"
+			location (path.join(_buildDir, "projects", _ACTION .. "-cygwin-clang"))
 
 		elseif "linux-arm-gcc" == _OPTIONS["gcc"] then
 			location (path.join(_buildDir, "projects", _ACTION .. "-linux-arm-gcc"))
@@ -317,6 +331,65 @@ function toolchain(_buildDir, _libDir)
 			"-Wshadow",
 		}
 
+	configuration { "cygwin-*" }
+		buildoptions {
+			"-Wunused-value",
+			"-fdata-sections",
+			"-ffunction-sections",
+			"-msse2",
+			"-Wunused-value",
+			"-Wundef",
+		}
+		linkoptions {
+			"-Wl,--gc-sections",
+			"-static",
+			"-static-libgcc",
+			"-static-libstdc++",
+		}
+
+	configuration { "x32", "cygwin-gcc" }
+		targetdir (path.join(_buildDir, "cygwin32-gcc/bin"))
+		objdir (path.join(_buildDir, "cygwin32-gcc/obj"))
+		libdirs {
+			path.join(_libDir, "lib/cygwin32-gcc"),
+		}
+		buildoptions {
+			"-m32",
+			"-mstackrealign",
+		}
+
+	configuration { "x64", "cygwin-gcc" }
+		targetdir (path.join(_buildDir, "cygwin64-gcc/bin"))
+		objdir (path.join(_buildDir, "cygwin64-gcc/obj"))
+		libdirs {
+			path.join(_libDir, "lib/cygwin64-gcc"),
+		}
+		buildoptions { "-m64" }
+
+	configuration { "cygwin-clang" }
+		buildoptions {
+		}
+		linkoptions {
+			"-Qunused-arguments",
+			"-Wno-error=unused-command-line-argument-hard-error-in-future",
+		}
+
+	configuration { "x32", "cygwin-clang" }
+		targetdir (path.join(_buildDir, "cygwin32-clang/bin"))
+		objdir (path.join(_buildDir, "cygwin32-clang/obj"))
+		libdirs {
+			path.join(_libDir, "lib/cygwin32-clang"),
+		}
+		buildoptions { "-m32" }
+
+	configuration { "x64", "cygwin-clang" }
+		targetdir (path.join(_buildDir, "cygwin64-clang/bin"))
+		objdir (path.join(_buildDir, "cygwin64-clang/obj"))
+		libdirs {
+			path.join(_libDir, "lib/cygwin64-clang"),
+		}
+		buildoptions { "-m64" }
+
 	configuration { "mingw-*" }
 		defines { "WIN32" }
 		defines {
@@ -458,6 +531,38 @@ function toolchain(_buildDir, _libDir)
 			"-m64",
 		}
 
+	configuration { "cygwin-gcc*", "x32" }
+		targetdir (path.join(_buildDir, "cygwin32_clang/bin"))
+		objdir (path.join(_buildDir, "cygwin32_gcc/obj"))
+		libdirs { path.join(_libDir, "lib/cygwin32_gcc") }
+		buildoptions {
+			"-m32",
+		}
+
+	configuration { "cygwin-gcc*", "x64" }
+		targetdir (path.join(_buildDir, "cygwin64_gcc/bin"))
+		objdir (path.join(_buildDir, "cygwin64_gcc/obj"))
+		libdirs { path.join(_libDir, "lib/cygwin64_gcc") }
+		buildoptions {
+			"-m64",
+		}
+
+	configuration { "cygwin-clang*", "x32" }
+		targetdir (path.join(_buildDir, "cygwin32_clang/bin"))
+		objdir (path.join(_buildDir, "cygwin32_clang/obj"))
+		libdirs { path.join(_libDir, "lib/cygwin32_clang") }
+		buildoptions {
+			"-m32",
+		}
+
+	configuration { "cygwin-clang*", "x64" }
+		targetdir (path.join(_buildDir, "cygwin64_clang/bin"))
+		objdir (path.join(_buildDir, "cygwin64_clang/obj"))
+		libdirs { path.join(_libDir, "lib/cygwin64_clang") }
+		buildoptions {
+			"-m64",
+		}
+
 	configuration { "linux-arm-gcc" }
 		targetdir (path.join(_buildDir, "linux32_arm_gcc/bin"))
 		objdir (path.join(_buildDir, "linux32_arm_gcc/obj"))
@@ -492,6 +597,12 @@ function strip()
 			"$(SILENT) echo Stripping symbols.",
 			"$(SILENT) $(MINGW)/bin/strip -s \"$(TARGET)\""
 		}
+		
+	configuration { "cygwin*", "Release" }
+		postbuildcommands {
+			"$(SILENT) echo Stripping symbols.",
+			"$(SILENT) /usr/bin/strip -s \"$(TARGET)\""
+		}	
 
 	configuration {} -- reset configuration
 end
