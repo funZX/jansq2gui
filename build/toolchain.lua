@@ -129,7 +129,7 @@ function toolchain(_buildDir, _libDir)
 			premake.gcc.cc  = "gcc"
 			premake.gcc.cxx = "g++"
 			premake.gcc.ar  = "ar"
-			location (path.join(_buildDir, "projects", _ACTION .. "-cygwin"))
+			location (path.join(_buildDir, "projects", _ACTION .. "-cygwin-gcc"))
 
 		elseif "cygwin-clang" == _OPTIONS["gcc"] then
 			premake.gcc.cc  = "clang"
@@ -216,8 +216,6 @@ function toolchain(_buildDir, _libDir)
 	flags {
 		"NoPCH",
 		"NativeWChar",
-		"NoRTTI",
-		"NoExceptions",
 		"NoEditAndContinue",
 		"NoFramePointer",
 	}
@@ -329,6 +327,7 @@ function toolchain(_buildDir, _libDir)
 	configuration { "*-gcc*" }
 		buildoptions {
 			"-Wshadow",
+			"-std=gnu++11"
 		}
 
 	configuration { "cygwin-*" }
@@ -336,7 +335,6 @@ function toolchain(_buildDir, _libDir)
 			"-Wunused-value",
 			"-fdata-sections",
 			"-ffunction-sections",
-			"-msse2",
 			"-Wunused-value",
 			"-Wundef",
 		}
@@ -368,6 +366,9 @@ function toolchain(_buildDir, _libDir)
 
 	configuration { "cygwin-clang" }
 		buildoptions {
+			"-I/usr/include/X11",
+			"-I/usr/include/w32api",
+			"-I/lib/clang/8.0.1/include",
 		}
 		linkoptions {
 			"-Qunused-arguments",

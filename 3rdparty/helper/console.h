@@ -1,6 +1,6 @@
 #pragma once
 
-#include "rang.h"
+#include <rang.h>
 
 void open_console();
 void close_console();

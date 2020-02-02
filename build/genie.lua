@@ -22,6 +22,7 @@ solution "jansq2gui"
 			"IMGUI_USE_GLFW_BINDING",
 			"IMIMPL_SHADER_GLES",
 			"LIBASYNC_STATIC",
+			"SQLITE_DEBUG",
 		}
 
     configuration "Release"
@@ -257,7 +258,7 @@ project ("3rdparty")
 			path.join(JQ2_THIRD_PARTY_DIR, "glfw/src/wgl_context.c"),
 		}
 
-	configuration { "not vs*" }
+	configuration { "linux*" }
 		files {
 			path.join(JQ2_THIRD_PARTY_DIR, "glfw/src/linux_joystick.h"),
 			path.join(JQ2_THIRD_PARTY_DIR, "glfw/src/linux_joystick.c"),
@@ -277,6 +278,7 @@ project ("3rdparty")
 		
 	configuration { "cygwin*" }
 		files {
+			path.join(JQ2_THIRD_PARTY_DIR, "glfw/src/null_joystick.h"),
 			path.join(JQ2_THIRD_PARTY_DIR, "glfw/src/null_joystick.c"),
 			path.join(JQ2_THIRD_PARTY_DIR, "glfw/src/x11_platform.h"),
 			path.join(JQ2_THIRD_PARTY_DIR, "glfw/src/xkb_unicode.h"),

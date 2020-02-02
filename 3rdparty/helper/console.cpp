@@ -1,13 +1,13 @@
 #include "console.h"
 
-#ifdef WIN32
+#if defined(OS_WIN)
 #   include <windows.h>
 #   include <cstdlib>
 #endif
 
 void open_console()
 {
-#ifdef WIN32
+#if defined(OS_WIN)
     // Attempt to attach to parent process's console
     if (!AttachConsole(ATTACH_PARENT_PROCESS))
         return;
@@ -39,12 +39,12 @@ void open_console()
     std::cerr.clear();
     std::wcin.clear();
     std::cin.clear();
-#endif // WIN#@
+#endif // defined(OS_WIN)
 }
 
 void close_console()
 {
-#ifdef WIN32
+#if defined(OS_WIN)
     FILE* fp = 0;
 
     // Redirect STDIN to NUL
@@ -61,5 +61,5 @@ void close_console()
 
     // Detach from console
     FreeConsole();
-#endif // WIN32
+#endif // defined(OS_WIN)
 }

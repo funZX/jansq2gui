@@ -1,7 +1,9 @@
 #ifndef RANG_DOT_HPP
 #define RANG_DOT_HPP
 
-#if defined(__unix__) || defined(__unix) || defined(__linux__)
+#if defined (__CYGWIN__)
+#define OS_CYGWIN
+#elif defined(__unix__) || defined(__unix) || defined(__linux__)
 #define OS_LINUX
 #elif defined(WIN32) || defined(_WIN32) || defined(_WIN64)
 #define OS_WIN
@@ -11,7 +13,7 @@
 #error Unknown Platform
 #endif
 
-#if defined(OS_LINUX) || defined(OS_MAC)
+#if defined(OS_LINUX) || defined(OS_MAC) || defined (OS_CYGWIN)
 #include <unistd.h>
 
 #elif defined(OS_WIN)
@@ -138,7 +140,7 @@ namespace rang_implementation {
 
     inline bool supportsColor() noexcept
     {
-#if defined(OS_LINUX) || defined(OS_MAC)
+#if defined(OS_LINUX) || defined(OS_MAC) || defined(OS_CYGWIN)
 
         static const bool result = [] {
             const char *Terms[]
@@ -223,7 +225,7 @@ namespace rang_implementation {
         using std::cerr;
         using std::clog;
         using std::cout;
-#if defined(OS_LINUX) || defined(OS_MAC)
+#if defined(OS_LINUX) || defined(OS_MAC) || defined (OS_CYGWIN)
         if (osbuf == cout.rdbuf()) {
             static const bool cout_term = isatty(fileno(stdout)) != 0;
             return cout_term;
