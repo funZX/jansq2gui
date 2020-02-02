@@ -53,7 +53,7 @@ solution "jansq2gui"
 		defines {
 			"_GLFW_X11",
 		}
-		links { "pthread", "X11" }		
+		links { "pthread", "X11.dll" }		
 	
 
 -----------------------------------------------------------------
@@ -70,7 +70,7 @@ toolchain(JQ2_BUILD_DIR, JQ2_THIRD_PARTY_DIR)
 -----------------------------------------------------------------
 	
 project ("jansq2gui")
-	kind "WindowedApp"	
+	kind "WindowedApp"
 	
 	includedirs { 
 		path.join(JQ2_DIR, "jansq2gui"),
@@ -116,7 +116,7 @@ project ("jansq2gui")
 		"3rdparty",
 	}
 	
-	strip()
+	postbuild()
 
 -----------------------------------------------------------------
 		
@@ -293,7 +293,8 @@ project ("3rdparty")
 			path.join(JQ2_THIRD_PARTY_DIR, "glfw/src/posix_thread.c"),
 			path.join(JQ2_THIRD_PARTY_DIR, "glfw/src/glx_context.c"),
 		}
-	strip()	
+
+	postbuild()	
 	
 -----------------------------------------------------------------
 -----------------------------------------------------------------

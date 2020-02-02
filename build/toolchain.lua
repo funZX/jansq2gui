@@ -71,12 +71,6 @@ function toolchain(_buildDir, _libDir)
 	}
 	
 	newoption {
-		trigger = "with-windows",
-		value = "#",
-		description = "Set the Windows target platform version (default: $WindowsSDKVersion or 8.1).",
-	}
-
-	newoption {
 		trigger     = "with-32bit-compiler",
 		description = "Use 32-bit compiler instead 64-bit.",
 	}
@@ -227,10 +221,10 @@ function toolchain(_buildDir, _libDir)
 	}
 
 	configuration { "Debug" }
-		flags { 
-			"Symbols"
-		}
 		targetsuffix "Debug"
+		flags {	
+			"Symbols",
+		}
 		defines {
 			"_DEBUG", "DEBUG"
 		}
@@ -256,6 +250,9 @@ function toolchain(_buildDir, _libDir)
 		}	
 	
 	configuration { "vs*" }
+		flags {
+			"staticruntime",
+		}
 		defines {
 			"WIN32",
 			"_WIN32",
@@ -585,24 +582,18 @@ function toolchain(_buildDir, _libDir)
 	return true
 end
 
-function strip()
+function postbuild()
 
 	configuration { "linux-*", "Release" }
 		postbuildcommands {
-			"$(SILENT) echo Stripping symbols.",
-			"$(SILENT) strip -s \"$(TARGET)\""
 		}
 
 	configuration { "mingw*", "Release" }
 		postbuildcommands {
-			"$(SILENT) echo Stripping symbols.",
-			"$(SILENT) $(MINGW)/bin/strip -s \"$(TARGET)\""
 		}
 		
 	configuration { "cygwin*", "Release" }
 		postbuildcommands {
-			"$(SILENT) echo Stripping symbols.",
-			"$(SILENT) /usr/bin/strip -s \"$(TARGET)\""
 		}	
 
 	configuration {} -- reset configuration
