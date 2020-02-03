@@ -47,20 +47,8 @@ function toolchain(_buildDir, _libDir)
 			{ "linux-clang",     "Linux  (Clang compiler)"      },
 			{ "linux-arm-gcc",   "Linux  (ARM, GCC compiler)"   },
 			{ "linux-arm-clang", "Linux  (ARM, Clang compiler)" },
-			{ "cygwin-gcc",      "Cygwin (GCC compiler)"       },
-			{ "cygwin-clang",    "Cygwin (CLang compiler)"     },
-		},
-	}
-
-	newoption {
-		trigger = "vs",
-		value = "toolset",
-		description = "Choose VS toolset",
-		allowed = {
-			{ "vs2012-clang",  "Clang 3.6"                       },
-			{ "vs2013-clang",  "Clang 3.6"                       },
-			{ "vs2015-clang",  "Clang 3.9"                       },
-			{ "vs2017-clang",  "Clang with MS CodeGen"           },
+			{ "cygwin-gcc",      "Cygwin (GCC compiler)"        },
+			{ "cygwin-clang",    "Cygwin (CLANG compiler)"      },
 		},
 	}
 	
@@ -75,7 +63,7 @@ function toolchain(_buildDir, _libDir)
 	}
 	
 	newoption {
-		trigger     = "static-runtime",
+		trigger     = "runtime-static",
 		description = "Enable static runtime.",
 	}
 	
@@ -93,6 +81,27 @@ function toolchain(_buildDir, _libDir)
 		os.rmdir(_buildDir)
 		os.mkdir(_buildDir)
 		os.exit(1)
+	end
+	
+	local optionNoExceptions = false
+	if _OPTIONS["no-exceptions"] then
+		optionNoExceptions = true
+	end
+	
+	local optionNoRTTI = false
+	if _OPTIONS["no-rtti"] then
+		optionNoRTTI = true
+	end
+	
+	local optionRuntimeStatic = false
+	if _OPTIONS["runtime-static"] then
+		optionRuntimeStatic = true
+	end
+
+	local optionNoCrt = false
+	if _OPTIONS["no-crt"] then
+		optionNoCrt = true;
+		crtNone()
 	end
 	
 	-- ACTION
@@ -140,23 +149,6 @@ function toolchain(_buildDir, _libDir)
 			location (path.join(_buildDir, "projects", _ACTION .. "-cygwin-clang"))		
 			
 		end
-	elseif _ACTION == "vs2012"
-		or _ACTION == "vs2013"
-		or _ACTION == "vs2015"
-		or _ACTION == "vs2017"
-		or _ACTION == "vs2019"
-		then
-		if (_ACTION .. "-clang") == _OPTIONS["vs"] then
-			if "vs2017-clang" == _OPTIONS["vs"] then
-				premake.vstudio.toolset = "v141_clang_c2"
-			elseif "vs2015-clang" == _OPTIONS["vs"] then
-				premake.vstudio.toolset = "LLVM-vs2014"
-			else
-				premake.vstudio.toolset = ("LLVM-" .. _ACTION)
-			end
-			location (path.join(_buildDir, "projects", _ACTION .. "-clang"))
-
-		end
 	end
 
 
@@ -164,21 +156,17 @@ function toolchain(_buildDir, _libDir)
 
 --------------------------------------------------------------------
 -------------------- ALL CONFIGURATIONS ----------------------------
-	if _OPTIONS["no-exceptions"] then
+	if optionNoExceptions then
 		flags { "NoExceptions" }
 		defines {  "_HAS_EXCEPTIONS=0" }
 	end
 	
-	if _OPTIONS["no-rtti"] then
+	if optionNoRTTI then
 		flags { "NoRTTI" }
 	end
 	
-	if _OPTIONS["static-runtime"] then
+	if optionRuntimeStatic then
 		flags { "StaticRuntime" }
-	end
-
-	if _OPTIONS["no-crt"] then
-		crtNone()
 	end
 
 	flags {
