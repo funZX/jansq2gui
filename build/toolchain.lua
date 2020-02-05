@@ -53,22 +53,22 @@ function toolchain(_buildDir, _libDir)
 	}
 	
 	newoption {
-		trigger     = "no-exceptions",
+		trigger     = "noexceptions",
 		description = "Disable exceptions.",
 	}	
 
 	newoption {
-		trigger     = "no-rtti",
+		trigger     = "nortti",
 		description = "Disable runtime type information.",
 	}
 	
 	newoption {
-		trigger     = "runtime-static",
+		trigger     = "runtimestatic",
 		description = "Enable static runtime.",
 	}
 	
 	newoption {
-		trigger     = "no-crt",
+		trigger     = "nocrt",
 		description = "Disable linking with standard runtime library.",
 	}
 	
@@ -77,32 +77,69 @@ function toolchain(_buildDir, _libDir)
 
 	location (path.join(_buildDir, "projects", _ACTION))
 
+--------------------------------------------------------------------
 	if _ACTION == "clean" then
 		os.rmdir(_buildDir)
 		os.mkdir(_buildDir)
 		os.exit(1)
 	end
-	
+--------------------------------------------------------------------
+-------------------- ALL CONFIGURATIONS ----------------------------
+
 	local optionNoExceptions = false
-	if _OPTIONS["no-exceptions"] then
+	if _OPTIONS["noexceptions"] then
+		print("noexceptions")
 		optionNoExceptions = true
 	end
 	
 	local optionNoRTTI = false
-	if _OPTIONS["no-rtti"] then
+	if _OPTIONS["nortti"] then
+		print("nortti")
 		optionNoRTTI = true
 	end
 	
 	local optionRuntimeStatic = false
-	if _OPTIONS["runtime-static"] then
+	if _OPTIONS["runtimestatic"] then
+		print("runtimestatic")
 		optionRuntimeStatic = true
 	end
 
 	local optionNoCrt = false
-	if _OPTIONS["no-crt"] then
-		optionNoCrt = true;
-		crtNone()
+	if _OPTIONS["nocrt"] then
+		print("nocrt")
+		optionNoCrt = true
 	end
+
+--------------------------------------------------------------------
+
+	local optionNoCrt = false
+	if optionNoCrt then
+		crtNone();
+	end
+--------------------------------------------------------------------
+
+	flags {
+		"NoPCH",
+		"NativeWChar",
+		"NoEditAndContinue",
+		"NoFramePointer",
+		"ExtraWarnings",
+		"FloatFast",		
+	}
+
+	defines {
+		"__STDC_LIMIT_MACROS",
+		"__STDC_FORMAT_MACROS",
+		"__STDC_CONSTANT_MACROS",
+	}
+
+	configuration { "Debug" }
+		flags {	 "Symbols" }
+		defines { "_DEBUG", "DEBUG" }
+
+	configuration { "Release" }
+		flags { "NoBufferSecurityCheck", "OptimizeSpeed" }
+		defines { "NDEBUG" }	
 	
 	-- ACTION
 	if _ACTION == "gmake" or _ACTION == "ninja" then
@@ -146,55 +183,33 @@ function toolchain(_buildDir, _libDir)
 			premake.gcc.cc  = "clang"
 			premake.gcc.cxx = "clang++"
 			premake.gcc.ar  = "ar"
-			location (path.join(_buildDir, "projects", _ACTION .. "-cygwin-clang"))		
-			
+			location (path.join(_buildDir, "projects", _ACTION .. "-cygwin-clang"))					
 		end
+	elseif _ACTION == "vs2012"
+		or _ACTION == "vs2013"
+		or _ACTION == "vs2015"
+		or _ACTION == "vs2017"
+		or _ACTION == "vs2019"
+		then
+
+		local action = premake.action.current()
+		action.vstudio.windowsTargetPlatformVersion    = windowsPlatform
+		action.vstudio.windowsTargetPlatformMinVersion = windowsPlatform		
 	end
 
-
 --------------------------------------------------------------------
-
---------------------------------------------------------------------
--------------------- ALL CONFIGURATIONS ----------------------------
 	if optionNoExceptions then
-		flags { "NoExceptions" }
-		defines {  "_HAS_EXCEPTIONS=0" }
+		flags { "NoExceptions", }
+		defines {  "_HAS_EXCEPTIONS=0", }
+	end
+
+	if optionRuntimeStatic then
+		flags { "StaticRuntime", }
 	end
 	
 	if optionNoRTTI then
-		flags { "NoRTTI" }
+		flags { "NoRTTI", }
 	end
-	
-	if optionRuntimeStatic then
-		flags { "StaticRuntime" }
-	end
-
-	flags {
-		"NoPCH",
-		"NativeWChar",
-		"NoEditAndContinue",
-		"NoFramePointer",
-		"ExtraWarnings",
-		"FloatFast",		
-	}
-
-	defines {
-		"__STDC_LIMIT_MACROS",
-		"__STDC_FORMAT_MACROS",
-		"__STDC_CONSTANT_MACROS",
-	}
-
-	configuration { "Debug" }
-		flags {	 "Symbols" }
-		defines { "_DEBUG", "DEBUG" }
-
-	configuration { "Release" }
-		flags { "NoBufferSecurityCheck", "OptimizeSpeed" }
-		defines { "NDEBUG" }
-
---------------------------------------------------------------------
-
-
 
 	configuration { "x32", "vs*" }
 		defines { "_WIN32" }
