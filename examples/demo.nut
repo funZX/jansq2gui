@@ -1,4 +1,4 @@
-#! /usr/bin/jansq2gui
+#! /usr/bin/jansq2gui --exec
 
 function Run()
 {
@@ -22,8 +22,10 @@ function Run()
 	imgui.end();
 }
 
-function Init()
+function Init(args)
 {
+	print(args)
+	
 	jansq2gui__Run(::Run);
 }
 

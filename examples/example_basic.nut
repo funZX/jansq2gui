@@ -1,4 +1,4 @@
-#! /usr/bin/jansq2gui
+#! /usr/bin/jansq2gui --exec
 
 demo <- imgui.status();
 
@@ -10,8 +10,10 @@ function Run()
 	}
 }
 
-function Init()
+function Init(args)
 {
+	print(args)
+	
 	jansq2gui__Run(::Run);
 }
 

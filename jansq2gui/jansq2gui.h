@@ -95,13 +95,14 @@ namespace jansq2gui
     class Api
     {
     public:
-        Api(): Width(640), Height(480), Title("jansq2gui"), WorkDir(""), VM(0) {};
+        Api(): Width(640), Height(480), Title("jansq2gui"), WorkDir(""), Args(0), VM(0) {};
 
     public:
         u32         Width;
         u32         Height;
         zpl_string  Title;
         zpl_string  WorkDir;
+        zpl_string  Args;
 
         HSQOBJECT   RunFunc;
         HSQUIRRELVM VM;

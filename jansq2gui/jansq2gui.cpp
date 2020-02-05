@@ -33,7 +33,7 @@ void jansq2gui::Api::jansq2gui__Api_Init1(zpl_string title, Sqrat::Function func
     jansq2guiApi.Width = 640;
     jansq2guiApi.Height = 480;
 
-    func.Execute();
+    func.Execute(jansq2guiApi.Args);
 }
 
 void jansq2gui::Api::jansq2gui__Api_Init2(zpl_string title, Sqrat::Function func, u32 width, u32 height)
@@ -42,7 +42,7 @@ void jansq2gui::Api::jansq2gui__Api_Init2(zpl_string title, Sqrat::Function func
     jansq2guiApi.Width   = width;
     jansq2guiApi.Height  = height;
 
-    func.Execute();
+    func.Execute(jansq2guiApi.Args);
 }
 
 void jansq2gui::Api::jansq2gui__Run(Sqrat::Function func)

@@ -1,13 +1,14 @@
-#include "console.h"
+#include <zpl.h>
+#include <console.h>
 
-#if defined(OS_WIN)
+#if defined(ZPL_SYSTEM_WINDOWS)
 #   include <windows.h>
 #   include <cstdlib>
 #endif
 
 void open_console()
 {
-#if defined(OS_WIN)
+#if defined(ZPL_SYSTEM_WINDOWS)
     // Attempt to attach to parent process's console
     if (!AttachConsole(ATTACH_PARENT_PROCESS))
         return;
@@ -39,7 +40,7 @@ void open_console()
     std::cerr.clear();
     std::wcin.clear();
     std::cin.clear();
-#endif // defined(OS_WIN)
+#endif // defined(ZPL_SYSTEM_WINDOWS)
 }
 
 void close_console()
@@ -61,5 +62,5 @@ void close_console()
 
     // Detach from console
     FreeConsole();
-#endif // defined(OS_WIN)
+#endif // defined(ZPL_SYSTEM_WINDOWS)
 }

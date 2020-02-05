@@ -79,10 +79,11 @@ int main(int argc, char** argv)
     const char* filename    = zpl_opts_string(&options.o, "exec", "");
     bool debugOn            = zpl_opts_has_arg(&options.o, "debug");
     int debugPort           = zpl_opts_integer(&options.o, "debugport", 20900);
-    
+    zpl_string args         = zpl_opts_string(&options.o, "args", "");
+
     jansq2gui::CSquirrel* debugVm = (debugOn && (debugPort > 0 && debugPort < USHRT_MAX)) ? &vm : 0;
     Debugger debugger       = Debugger(debugVm, debugPort);
-
+    
     if (!zpl_fs_exists(filename))
     {
         jansq2gui_error("File not found %s", filename);
@@ -108,6 +109,13 @@ int main(int argc, char** argv)
     jansq2guiApi.WorkDir = work_dir;
     jansq2guiApi.VM = vm.GetSQVM();
     sqrat_importlib_library_path = jansq2guiApi.WorkDir;
+
+    jansq2guiApi.Args = zpl_string_make(zpl_heap(), args);
+    jansq2guiApi.Args = zpl_string_append_fmt(jansq2guiApi.Args, " --workdir=%s", jansq2guiApi.WorkDir);
+    if (debugVm)
+    {
+        jansq2guiApi.Args = zpl_string_append_fmt(jansq2guiApi.Args, " --debugport=%d", debugPort);
+    }
 
     nut.Run();
 
@@ -156,4 +164,5 @@ void ResizeGL(int w, int h)
 
 void DestroyGL()
 {
+    zpl_string_free(jansq2guiApi.Args);
 }
