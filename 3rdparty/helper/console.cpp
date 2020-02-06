@@ -4,7 +4,7 @@
 #if defined(ZPL_SYSTEM_WINDOWS)
 #   include <windows.h>
 #   include <cstdlib>
-#endif
+#endif // defined(ZPL_SYSTEM_WINDOWS)
 
 void open_console()
 {
@@ -45,7 +45,7 @@ void open_console()
 
 void close_console()
 {
-#if defined(OS_WIN)
+#if defined(ZPL_SYSTEM_WINDOWS)
     FILE* fp = 0;
 
     // Redirect STDIN to NUL

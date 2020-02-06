@@ -112,7 +112,6 @@ function toolchain(_buildDir, _libDir)
 
 --------------------------------------------------------------------
 
-	local optionNoCrt = false
 	if optionNoCrt then
 		crtNone();
 	end
@@ -219,10 +218,10 @@ function toolchain(_buildDir, _libDir)
 		defines { "_WIN64" }
 
 	configuration { "x32", "*-gcc* or *-clang*" }
-		buildoptions { "-m32", "-Wshadow" }
+		buildoptions { "-Wshadow" }
 
 	configuration { "x64", "*-gcc* or *-clang*" }
-		buildoptions { "-m64", "-Wshadow" }
+		buildoptions { "-Wshadow" }
 
 
 
@@ -400,7 +399,7 @@ function toolchain(_buildDir, _libDir)
 	configuration { "cygwin-clang*", "x64" }
 		targetdir (path.join(_buildDir, "cygwin64_clang/bin"))
 		objdir (path.join(_buildDir, "cygwin64_clang/obj"))
-		libdirs { path.join(_libDir, "lib/cygwin64_clang") }	
+		libdirs { path.join(_libDir, "lib/cygwin64_clang") }
 
 	configuration {} -- reset configuration
 
