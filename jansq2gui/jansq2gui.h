@@ -112,6 +112,8 @@ namespace jansq2gui
         static void         jansq2gui__Api_Init2(zpl_string Title, Sqrat::Function func, u32 Width, u32 Height);
         static void         jansq2gui__Run(Sqrat::Function func);
 
+
+// --------------------------- ZPL -----------------------------------
         struct jansq2gui__Zpl_String
         {
         public:
@@ -121,6 +123,46 @@ namespace jansq2gui
             jansq2gui__Zpl_String(char* s) { str = s; }
         };
 
+// --------------------------- ENET -----------------------------------
+        struct jansq2gui__Enet_Socket
+        {
+        public:
+            ENetSocket fd;
+
+            jansq2gui__Enet_Socket() { fd = -1; }
+
+        };
+
+        struct jansq2gui__Enet_Address
+        {
+        public:
+            jansq2gui__Enet_Address() { }
+        };
+
+        struct jansq2gui__Enet_Host
+        {
+        public:
+            jansq2gui__Enet_Host() { }
+        };
+
+        struct jansq2gui__Enet_Peer
+        {
+        public:
+            jansq2gui__Enet_Peer() { }
+        };
+
+        struct jansq2gui__Enet_Packet
+        {
+        public:
+            jansq2gui__Enet_Packet() { }
+        };
+
+        struct jansq2gui__Enet_Buffer
+        {
+        public:
+            jansq2gui__Enet_Buffer() { }
+        };
+// -------------------------- IMGUI ----------------------------------
         struct jansq2gui__ImGui_Status
         {
         public:
@@ -146,6 +188,7 @@ namespace jansq2gui
         static bool                         jansq2gui__ImGui__BeginChildId2(ImGuiID id, const ImVec2& size);
         static bool                         jansq2gui__ImGui__BeginChildId3(ImGuiID id, const ImVec2& size, bool border);
         static bool                         jansq2gui__ImGui__BeginChildId4(ImGuiID id, const ImVec2& size, bool border, ImGuiWindowFlags flags);
+// ----------------------------------------------------------------------
     };
 };
 

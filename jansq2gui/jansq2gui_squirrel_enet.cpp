@@ -37,7 +37,36 @@ void jansq2gui::CSquirrel::BindEnet()
     Sqrat::Table table(m_vm);
     m_rootTable->Bind(_SC("enet"), table);
 
-    table.Func(_SC("false"), &jansq2gui__Enet_False);
+
+    table.Bind(_SC("socket"), Sqrat::Class<jansq2gui::Api::jansq2gui__Enet_Socket>(m_vm, _SC("socket"))
+        .Ctor()
+        .Var(_SC("fd"), &jansq2gui::Api::jansq2gui__Enet_Socket::fd)
+    );
+
+    table.Bind(_SC("address"), Sqrat::Class<jansq2gui::Api::jansq2gui__Enet_Address>(m_vm, _SC("address"))
+        .Ctor()
+    );
+
+    table.Bind(_SC("host"), Sqrat::Class<jansq2gui::Api::jansq2gui__Enet_Host>(m_vm, _SC("host"))
+        .Ctor()
+    );
+
+    table.Bind(_SC("peer"), Sqrat::Class<jansq2gui::Api::jansq2gui__Enet_Peer>(m_vm, _SC("peer"))
+        .Ctor()
+    );
+
+    table.Bind(_SC("packet"), Sqrat::Class<jansq2gui::Api::jansq2gui__Enet_Packet>(m_vm, _SC("packet"))
+        .Ctor()
+    );
+
+    table.Bind(_SC("buffer"), Sqrat::Class<jansq2gui::Api::jansq2gui__Enet_Buffer>(m_vm, _SC("buffer"))
+        .Ctor()
+    );
+
+    table.Func(_SC("initialize"), &enet_initialize);
+    table.Func(_SC("deinitialize"), &enet_deinitialize);
+    table.Func(_SC("linked_version"), &enet_linked_version);
+    table.Func(_SC("time_get"), &enet_time_get);
 }
 
 // ----------------------------------------------------------------------//
