@@ -27,19 +27,59 @@
 
 // ----------------------------------------------------------------------//
 
-bool jansq2gui__Enet_False()
+jansq2gui::Api::jansq2gui__Enet_Socket::jansq2gui__Enet_Socket(ENetSocketType type)
 {
-    return false;
+    fd = enet_socket_create(type);
 }
+
+// ----------------------------------------------------------------------//
+
+jansq2gui::Api::jansq2gui__Enet_Socket::~jansq2gui__Enet_Socket()
+{
+    enet_socket_destroy(fd);
+}
+
+// ----------------------------------------------------------------------//
 
 void jansq2gui::CSquirrel::BindEnet()
 {
     Sqrat::Table table(m_vm);
+    
+    m_constTable->Enum(_SC("EnetSocketType"), Sqrat::Enumeration(m_vm)
+        .Const(_SC("ENET_SOCKET_TYPE_STREAM"), ENET_SOCKET_TYPE_STREAM)
+        .Const(_SC("ENET_SOCKET_TYPE_DATAGRAM"), ENET_SOCKET_TYPE_DATAGRAM)
+    );
+
+    m_constTable->Enum(_SC("ENetSocketWait"), Sqrat::Enumeration(m_vm)
+        .Const(_SC("ENET_SOCKET_WAIT_NONE"), ENET_SOCKET_WAIT_NONE)
+        .Const(_SC("ENET_SOCKET_WAIT_SEND"), ENET_SOCKET_WAIT_SEND)
+        .Const(_SC("ENET_SOCKET_WAIT_RECEIVE"), ENET_SOCKET_WAIT_NONE)
+        .Const(_SC("ENET_SOCKET_WAIT_INTERRUPT"), ENET_SOCKET_WAIT_SEND)
+    );
+
+    m_constTable->Enum(_SC("ENetSocketOption"), Sqrat::Enumeration(m_vm)
+        .Const(_SC("ENET_SOCKOPT_NONBLOCK"), ENET_SOCKOPT_NONBLOCK)
+        .Const(_SC("ENET_SOCKOPT_BROADCAST"), ENET_SOCKOPT_BROADCAST)
+        .Const(_SC("ENET_SOCKOPT_RCVBUF"), ENET_SOCKOPT_RCVBUF)
+        .Const(_SC("ENET_SOCKOPT_SNDBUF"), ENET_SOCKOPT_SNDBUF)
+        .Const(_SC("ENET_SOCKOPT_REUSEADDR"), ENET_SOCKOPT_REUSEADDR)
+        .Const(_SC("ENET_SOCKOPT_RCVTIMEO"), ENET_SOCKOPT_RCVTIMEO)
+        .Const(_SC("ENET_SOCKOPT_SNDTIMEO"), ENET_SOCKOPT_SNDTIMEO)
+        .Const(_SC("ENET_SOCKOPT_ERROR"), ENET_SOCKOPT_ERROR)
+        .Const(_SC("ENET_SOCKOPT_NODELAY"), ENET_SOCKOPT_NODELAY)
+        .Const(_SC("ENET_SOCKOPT_IPV6_V6ONLY"), ENET_SOCKOPT_IPV6_V6ONLY)
+    );
+
+    m_constTable->Enum(_SC("ENetSocketShutdown"), Sqrat::Enumeration(m_vm)
+        .Const(_SC("ENET_SOCKET_SHUTDOWN_READ"), ENET_SOCKET_SHUTDOWN_READ)
+        .Const(_SC("ENET_SOCKET_SHUTDOWN_WRITE"), ENET_SOCKET_SHUTDOWN_WRITE)
+        .Const(_SC("ENET_SOCKET_SHUTDOWN_READ_WRITE"), ENET_SOCKET_SHUTDOWN_READ_WRITE)
+    );
+
     m_rootTable->Bind(_SC("enet"), table);
 
-
     table.Bind(_SC("socket"), Sqrat::Class<jansq2gui::Api::jansq2gui__Enet_Socket>(m_vm, _SC("socket"))
-        .Ctor()
+        .Ctor<ENetSocketType>()
         .Var(_SC("fd"), &jansq2gui::Api::jansq2gui__Enet_Socket::fd)
     );
 

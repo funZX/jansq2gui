@@ -2,7 +2,7 @@
 *
 *    MIT License
 *
-*    Copyright (C) 2012  Adrian SIMINCIUC
+*    Copyright (C) 2020  Adrian SIMINCIUC
 *
 *    Permission is hereby granted, free of charge, to any person obtaining a copy
 *    of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +27,8 @@
 
 jansq2gui::Api jansq2guiApi;
 
+// ----------------------------------------------------------------------//
+
 void jansq2gui::Api::jansq2gui__Api_Init1(zpl_string title, Sqrat::Function func)
 {
     jansq2guiApi.Title  = title;
@@ -35,6 +37,8 @@ void jansq2gui::Api::jansq2gui__Api_Init1(zpl_string title, Sqrat::Function func
 
     func.Execute(jansq2guiApi.Args);
 }
+
+// ----------------------------------------------------------------------//
 
 void jansq2gui::Api::jansq2gui__Api_Init2(zpl_string title, Sqrat::Function func, u32 width, u32 height)
 {
@@ -45,7 +49,11 @@ void jansq2gui::Api::jansq2gui__Api_Init2(zpl_string title, Sqrat::Function func
     func.Execute(jansq2guiApi.Args);
 }
 
+// ----------------------------------------------------------------------//
+
 void jansq2gui::Api::jansq2gui__Run(Sqrat::Function func)
 {
     jansq2guiApi.RunFunc = func.GetFunc();
 }
+
+// ----------------------------------------------------------------------//

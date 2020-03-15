@@ -2,7 +2,7 @@
 *
 *    MIT License
 *
-*    Copyright (C) 2012  Adrian SIMINCIUC
+*    Copyright (C) 2020  Adrian SIMINCIUC
 *
 *    Permission is hereby granted, free of charge, to any person obtaining a copy
 *    of this software and associated documentation files (the "Software"), to deal
@@ -124,19 +124,28 @@ namespace jansq2gui
         };
 
 // --------------------------- ENET -----------------------------------
-        struct jansq2gui__Enet_Socket
+        struct jansq2gui__Enet_Buffer
         {
         public:
-            ENetSocket fd;
-
-            jansq2gui__Enet_Socket() { fd = -1; }
-
+            jansq2gui__Enet_Buffer() { }
         };
 
         struct jansq2gui__Enet_Address
         {
         public:
             jansq2gui__Enet_Address() { }
+        };
+
+        struct jansq2gui__Enet_Socket
+        {
+        public:
+            ENetSocket fd;
+
+            jansq2gui__Enet_Socket(ENetSocketType type);
+            ~jansq2gui__Enet_Socket();
+
+
+
         };
 
         struct jansq2gui__Enet_Host
@@ -157,11 +166,6 @@ namespace jansq2gui
             jansq2gui__Enet_Packet() { }
         };
 
-        struct jansq2gui__Enet_Buffer
-        {
-        public:
-            jansq2gui__Enet_Buffer() { }
-        };
 // -------------------------- IMGUI ----------------------------------
         struct jansq2gui__ImGui_Status
         {

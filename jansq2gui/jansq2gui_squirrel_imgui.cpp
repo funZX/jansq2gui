@@ -35,12 +35,16 @@ jansq2gui::Api::jansq2gui__ImGui_Status jansq2gui::Api::jansq2gui__ImGui__Begin1
     return ret;
 }
 
+// ----------------------------------------------------------------------//
+
 jansq2gui::Api::jansq2gui__ImGui_Status jansq2gui::Api::jansq2gui__ImGui__Begin2(const char* name, ImGuiWindowFlags flags)
 {
     jansq2gui::Api::jansq2gui__ImGui_Status ret;    
     ret.show = ImGui::Begin(name, 0, flags);
     return ret;
 }
+
+// ----------------------------------------------------------------------//
 
 jansq2gui::Api::jansq2gui__ImGui_Status jansq2gui::Api::jansq2gui__ImGui__Begin3(const char* name, ImGuiWindowFlags flags, bool p_open)
 {
@@ -49,30 +53,42 @@ jansq2gui::Api::jansq2gui__ImGui_Status jansq2gui::Api::jansq2gui__ImGui__Begin3
     return ret;
 }
 
+// ----------------------------------------------------------------------//
+
 bool jansq2gui::Api::jansq2gui__ImGui__BeginChild1(const char* str_id)
 {
     return ImGui::BeginChild(str_id);
 }
+
+// ----------------------------------------------------------------------//
 
 bool jansq2gui::Api::jansq2gui__ImGui__BeginChild2(const char* str_id, const ImVec2& size)
 {
     return ImGui::BeginChild(str_id, size);
 }
 
+// ----------------------------------------------------------------------//
+
 bool jansq2gui::Api::jansq2gui__ImGui__BeginChild3(const char* str_id, const ImVec2& size, bool border)
 {
     return ImGui::BeginChild(str_id, size, border);
 }
+
+// ----------------------------------------------------------------------//
 
 bool jansq2gui::Api::jansq2gui__ImGui__BeginChild4(const char* str_id, const ImVec2& size, bool border, ImGuiWindowFlags flags)
 {
     return ImGui::BeginChild(str_id, size, border, flags);
 }
 
+// ----------------------------------------------------------------------//
+
 bool jansq2gui::Api::jansq2gui__ImGui__BeginChildId1(ImGuiID id)
 {
     return ImGui::BeginChild(id);
 }
+
+// ----------------------------------------------------------------------//
 
 bool jansq2gui::Api::jansq2gui__ImGui__BeginChildId2(ImGuiID id, const ImVec2& size)
 {
@@ -80,16 +96,21 @@ bool jansq2gui::Api::jansq2gui__ImGui__BeginChildId2(ImGuiID id, const ImVec2& s
 
 }
 
+// ----------------------------------------------------------------------//
+
 bool jansq2gui::Api::jansq2gui__ImGui__BeginChildId3(ImGuiID id, const ImVec2& size, bool border)
 {
     return ImGui::BeginChild(id, size, border);
 }
+
+// ----------------------------------------------------------------------//
 
 bool jansq2gui::Api::jansq2gui__ImGui__BeginChildId4(ImGuiID id, const ImVec2& size, bool border, ImGuiWindowFlags flags)
 {
     return ImGui::BeginChild(id, size, border, flags);
 }
 
+// ----------------------------------------------------------------------//
 
 jansq2gui::Api::jansq2gui__ImGui_Status jansq2gui::Api::jansq2gui__ImGui__ShowDemoWindow()
 {
@@ -100,6 +121,8 @@ jansq2gui::Api::jansq2gui__ImGui_Status jansq2gui::Api::jansq2gui__ImGui__ShowDe
     return ret;
 }
 
+// ----------------------------------------------------------------------//
+
 jansq2gui::Api::jansq2gui__ImGui_Status jansq2gui::Api::jansq2gui__ImGui__ShowDemoWindow(bool p_open)
 {
     jansq2gui::Api::jansq2gui__ImGui_Status ret;
@@ -107,6 +130,8 @@ jansq2gui::Api::jansq2gui__ImGui_Status jansq2gui::Api::jansq2gui__ImGui__ShowDe
     ImGui::ShowDemoWindow(p_open ? &ret.open : 0);
     return ret;
 }
+
+// ----------------------------------------------------------------------//
 
 void jansq2gui::CSquirrel::BindImGui()
 {
