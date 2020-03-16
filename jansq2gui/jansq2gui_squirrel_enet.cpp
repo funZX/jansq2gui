@@ -27,16 +27,70 @@
 
 // ----------------------------------------------------------------------//
 
+jansq2gui::Api::jansq2gui__Enet_Address::jansq2gui__Enet_Address(EAddressInit addr_init, enet_uint16 port, enet_uint16 sin6_scope_id)
+{
+    address.port = port;
+    address.sin6_scope_id = 0;
+
+    switch (addr_init)
+    {
+    case ENET_ADDRESS_ANY:
+        address = IN6ADDR_ANY_INIT;
+        break;
+    case ENET_ADDRESS_LOOPBACK:
+        address = IN6ADDR_LOOPBACK_INIT;
+        break;
+    }
+}
+
+// ----------------------------------------------------------------------//
+
+jansq2gui::Api::jansq2gui__Enet_Address::jansq2gui__Enet_Address(EAddressInit addr_init, enet_uint16 port)
+    :jansq2gui__Enet_Address(addr_init, port, 0)
+{
+
+}
+
+// ----------------------------------------------------------------------//
+
+void jansq2gui::Api::jansq2gui__Enet_SockSet::zero()
+{
+    ENET_SOCKETSET_EMPTY(socketset);
+}
+
+// ----------------------------------------------------------------------//
+
+void jansq2gui::Api::jansq2gui__Enet_SockSet::set(jansq2gui__Enet_Socket socket)
+{
+    ENET_SOCKETSET_ADD(socketset, socket.socket);
+}
+
+// ----------------------------------------------------------------------//
+
+void jansq2gui::Api::jansq2gui__Enet_SockSet::clr(jansq2gui__Enet_Socket socket)
+{
+    ENET_SOCKETSET_REMOVE(socketset, socket.socket);
+}
+
+// ----------------------------------------------------------------------//
+
+bool jansq2gui::Api::jansq2gui__Enet_SockSet::isset(jansq2gui__Enet_Socket socket)
+{
+    return 0 != ENET_SOCKETSET_CHECK(socketset, socket.socket);
+}
+
+// ----------------------------------------------------------------------//
+
 jansq2gui::Api::jansq2gui__Enet_Socket::jansq2gui__Enet_Socket(ENetSocketType type)
 {
-    fd = enet_socket_create(type);
+    socket = enet_socket_create(type);
 }
 
 // ----------------------------------------------------------------------//
 
 jansq2gui::Api::jansq2gui__Enet_Socket::~jansq2gui__Enet_Socket()
 {
-    enet_socket_destroy(fd);
+    enet_socket_destroy(socket);
 }
 
 // ----------------------------------------------------------------------//
@@ -75,16 +129,29 @@ void jansq2gui::CSquirrel::BindEnet()
         .Const(_SC("ENET_SOCKET_SHUTDOWN_WRITE"), ENET_SOCKET_SHUTDOWN_WRITE)
         .Const(_SC("ENET_SOCKET_SHUTDOWN_READ_WRITE"), ENET_SOCKET_SHUTDOWN_READ_WRITE)
     );
+    
+    m_constTable->Enum(_SC("ENetAddressInit"), Sqrat::Enumeration(m_vm)
+        .Const(_SC("ENET_ADDRESS_ANY"), jansq2gui::Api::jansq2gui__Enet_Address::ENET_ADDRESS_ANY)
+        .Const(_SC("ENET_ADDRESS_LOOPBACK"), jansq2gui::Api::jansq2gui__Enet_Address::ENET_ADDRESS_LOOPBACK)
+    );
 
     m_rootTable->Bind(_SC("enet"), table);
 
-    table.Bind(_SC("socket"), Sqrat::Class<jansq2gui::Api::jansq2gui__Enet_Socket>(m_vm, _SC("socket"))
-        .Ctor<ENetSocketType>()
-        .Var(_SC("fd"), &jansq2gui::Api::jansq2gui__Enet_Socket::fd)
+    table.Bind(_SC("address"), Sqrat::Class<jansq2gui::Api::jansq2gui__Enet_Address>(m_vm, _SC("address"))
+        .Ctor<jansq2gui::Api::jansq2gui__Enet_Address::EAddressInit, enet_uint16, enet_uint16>()
+        .Ctor<jansq2gui::Api::jansq2gui__Enet_Address::EAddressInit, enet_uint16>()
     );
 
-    table.Bind(_SC("address"), Sqrat::Class<jansq2gui::Api::jansq2gui__Enet_Address>(m_vm, _SC("address"))
+    table.Bind(_SC("socketset"), Sqrat::Class<jansq2gui::Api::jansq2gui__Enet_SockSet>(m_vm, _SC("socketset"))
         .Ctor()
+        .Func(_SC("zero"), &jansq2gui::Api::jansq2gui__Enet_SockSet::zero)
+        .Func(_SC("set"), &jansq2gui::Api::jansq2gui__Enet_SockSet::set)
+        .Func(_SC("clr"), &jansq2gui::Api::jansq2gui__Enet_SockSet::clr)
+        .Func(_SC("isset"), &jansq2gui::Api::jansq2gui__Enet_SockSet::isset)
+    );
+
+    table.Bind(_SC("socket"), Sqrat::Class<jansq2gui::Api::jansq2gui__Enet_Socket>(m_vm, _SC("socket"))
+        .Ctor<ENetSocketType>()
     );
 
     table.Bind(_SC("host"), Sqrat::Class<jansq2gui::Api::jansq2gui__Enet_Host>(m_vm, _SC("host"))

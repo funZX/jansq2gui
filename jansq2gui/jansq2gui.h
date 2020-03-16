@@ -133,19 +133,42 @@ namespace jansq2gui
         struct jansq2gui__Enet_Address
         {
         public:
-            jansq2gui__Enet_Address() { }
+            enum EAddressInit
+            {
+                ENET_ADDRESS_ANY,
+                ENET_ADDRESS_LOOPBACK
+            };
+
+            ENetAddress address;
+
+            jansq2gui__Enet_Address() {}
+            jansq2gui__Enet_Address(EAddressInit addr_init, enet_uint16 port, enet_uint16 sin6_scope_id);
+            jansq2gui__Enet_Address(EAddressInit addr_init, enet_uint16 port);
+        };
+
+        struct jansq2gui__Enet_Socket;
+        struct jansq2gui__Enet_SockSet
+        {
+        public:
+            ENetSocketSet socketset;
+
+            jansq2gui__Enet_SockSet() {}
+            ~jansq2gui__Enet_SockSet() {}
+
+            void zero();
+            void set(jansq2gui__Enet_Socket socket);
+            void clr(jansq2gui__Enet_Socket socket);
+            bool isset(jansq2gui__Enet_Socket socket);
         };
 
         struct jansq2gui__Enet_Socket
         {
         public:
-            ENetSocket fd;
+            ENetSocket socket;
 
+            jansq2gui__Enet_Socket() {}
             jansq2gui__Enet_Socket(ENetSocketType type);
             ~jansq2gui__Enet_Socket();
-
-
-
         };
 
         struct jansq2gui__Enet_Host
